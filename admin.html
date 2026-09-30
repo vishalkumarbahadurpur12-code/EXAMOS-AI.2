@@ -1,1441 +1,466 @@
-
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>EXAMOS AI — Admin Panel</title>
-
-<style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
-
-body{
-  font-family:Arial,sans-serif;
-  background:#090b18;
-  color:#fff;
-  min-height:100vh;
-}
-
-button,input,select,textarea{
-  font:inherit;
-}
-
-button{
-  cursor:pointer;
-}
-
-.hidden{
-  display:none!important;
-}
-
-/* LOGIN */
-
-#loginPage{
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-}
-
-.login-card{
-  width:100%;
-  max-width:420px;
-  background:#171b35;
-  border:1px solid #292f55;
-  border-radius:22px;
-  padding:30px;
-  box-shadow:0 20px 60px rgba(0,0,0,.35);
-}
-
-.logo{
-  text-align:center;
-  font-size:30px;
-  font-weight:800;
-  color:#9b7cff;
-  margin-bottom:8px;
-}
-
-.login-subtitle{
-  text-align:center;
-  color:#aeb5d5;
-  margin-bottom:28px;
-}
-
-.input-group{
-  margin-bottom:16px;
-}
-
-.input-group label{
-  display:block;
-  margin-bottom:7px;
-  color:#c8cdea;
-  font-size:14px;
-}
-
-.input-group input,
-.input-group select,
-.input-group textarea{
-  width:100%;
-  background:#0f1328;
-  border:1px solid #30375f;
-  color:#fff;
-  border-radius:12px;
-  padding:13px;
-  outline:none;
-}
-
-.input-group input:focus,
-.input-group select:focus,
-.input-group textarea:focus{
-  border-color:#8b5cf6;
-}
-
-.primary-btn{
-  width:100%;
-  border:0;
-  background:linear-gradient(135deg,#8b5cf6,#4f7cff);
-  color:white;
-  padding:14px;
-  border-radius:13px;
-  font-weight:700;
-}
-
-.error{
-  color:#ff7b8a;
-  font-size:13px;
-  margin-top:12px;
-  text-align:center;
-}
-
-/* APP */
-
-#adminApp{
-  min-height:100vh;
-}
-
-.topbar{
-  height:70px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 22px;
-  background:#11152b;
-  border-bottom:1px solid #272d50;
-  position:sticky;
-  top:0;
-  z-index:20;
-}
-
-.top-title{
-  font-size:21px;
-  font-weight:800;
-}
-
-.top-title span{
-  color:#8b5cf6;
-}
-
-.logout-btn{
-  background:#242a49;
-  color:#fff;
-  border:1px solid #363e68;
-  padding:9px 14px;
-  border-radius:10px;
-}
-
-/* LAYOUT */
-
-.layout{
-  display:flex;
-  min-height:calc(100vh - 70px);
-}
-
-.sidebar{
-  width:245px;
-  background:#10142a;
-  border-right:1px solid #272d50;
-  padding:18px 12px;
-  flex-shrink:0;
-}
-
-.nav-btn{
-  width:100%;
-  text-align:left;
-  background:transparent;
-  color:#aeb5d5;
-  border:0;
-  padding:13px 14px;
-  border-radius:11px;
-  margin-bottom:5px;
-}
-
-.nav-btn:hover,
-.nav-btn.active{
-  background:#25294b;
-  color:#fff;
-}
-
-.content{
-  flex:1;
-  padding:25px;
-  max-width:1400px;
-}
-
-/* DASHBOARD */
-
-.page-title{
-  font-size:27px;
-  margin-bottom:7px;
-}
-
-.page-subtitle{
-  color:#929abb;
-  margin-bottom:25px;
-}
-
-.stats{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:15px;
-  margin-bottom:25px;
-}
-
-.stat-card{
-  background:#171b35;
-  border:1px solid #292f55;
-  border-radius:17px;
-  padding:20px;
-}
-
-.stat-icon{
-  font-size:26px;
-  margin-bottom:12px;
-}
-
-.stat-label{
-  color:#9ca4c7;
-  font-size:13px;
-}
-
-.stat-value{
-  font-size:27px;
-  font-weight:800;
-  margin-top:5px;
-}
-
-/* CARDS */
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:18px;
-}
-
-.card{
-  background:#171b35;
-  border:1px solid #292f55;
-  border-radius:17px;
-  padding:20px;
-}
-
-.card h3{
-  margin-bottom:15px;
-}
-
-.card p{
-  color:#9ca4c7;
-  line-height:1.6;
-}
-
-/* TABLE */
-
-.table-wrap{
-  overflow-x:auto;
-}
-
-table{
-  width:100%;
-  border-collapse:collapse;
-}
-
-th,td{
-  padding:13px;
-  text-align:left;
-  border-bottom:1px solid #292f55;
-  white-space:nowrap;
-}
-
-th{
-  color:#9ca4c7;
-  font-size:13px;
-}
-
-td{
-  color:#e8eaff;
-}
-
-.badge{
-  display:inline-block;
-  padding:5px 9px;
-  border-radius:8px;
-  background:#292e52;
-  font-size:12px;
-}
-
-/* FORM */
-
-.form-grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:15px;
-}
-
-.action-btn{
-  background:#252b50;
-  color:#fff;
-  border:1px solid #39416c;
-  padding:10px 14px;
-  border-radius:10px;
-}
-
-.action-btn.primary{
-  background:#7c55e8;
-  border-color:#7c55e8;
-}
-
-.full{
-  grid-column:1/-1;
-}
-
-/* MOBILE */
-
-@media(max-width:900px){
-
-  .stats{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .sidebar{
-    width:205px;
-  }
-
-}
-
-@media(max-width:650px){
-
-  .topbar{
-    padding:0 14px;
-  }
-
-  .top-title{
-    font-size:18px;
-  }
-
-  .layout{
-    display:block;
-  }
-
-  .sidebar{
-    width:100%;
-    display:flex;
-    overflow-x:auto;
-    padding:10px;
-    border-right:0;
-    border-bottom:1px solid #272d50;
-  }
-
-  .nav-btn{
-    width:auto;
-    white-space:nowrap;
-    margin:0 4px;
-  }
-
-  .content{
-    padding:16px;
-  }
-
-  .stats{
-    grid-template-columns:1fr 1fr;
-    gap:10px;
-  }
-
-  .stat-card{
-    padding:15px;
-  }
-
-  .stat-value{
-    font-size:23px;
-  }
-
-  .grid,
-  .form-grid{
-    grid-template-columns:1fr;
-  }
-
-  .full{
-    grid-column:auto;
-  }
-
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EXAMOS AI — Admin Panel</title>
+
+  <style>
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+      font-family:Arial,sans-serif;
+    }
+
+    body{
+      background:#090b18;
+      color:white;
+      min-height:100vh;
+    }
+
+    .login-box{
+      width:92%;
+      max-width:400px;
+      margin:100px auto;
+      background:#171b35;
+      padding:25px;
+      border-radius:18px;
+      box-shadow:0 10px 35px #0008;
+    }
+
+    h1{
+      text-align:center;
+      margin-bottom:8px;
+    }
+
+    .sub{
+      text-align:center;
+      color:#aaa;
+      margin-bottom:25px;
+    }
+
+    input{
+      width:100%;
+      padding:14px;
+      margin:8px 0;
+      border:1px solid #343957;
+      border-radius:10px;
+      background:#0e1122;
+      color:white;
+      outline:none;
+    }
+
+    button{
+      width:100%;
+      padding:14px;
+      margin-top:12px;
+      border:0;
+      border-radius:10px;
+      background:#8b5cf6;
+      color:white;
+      font-size:16px;
+      font-weight:bold;
+      cursor:pointer;
+    }
+
+    button:hover{
+      opacity:.9;
+    }
+
+    .error{
+      color:#ff6b6b;
+      text-align:center;
+      margin-top:12px;
+      min-height:20px;
+    }
+
+    #adminPanel{
+      display:none;
+    }
+
+    header{
+      background:#171b35;
+      padding:16px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      position:sticky;
+      top:0;
+      z-index:10;
+    }
+
+    .logo{
+      font-size:20px;
+      font-weight:bold;
+      color:#a78bfa;
+    }
+
+    .logout{
+      width:auto;
+      margin:0;
+      padding:9px 14px;
+      background:#ef4444;
+      font-size:14px;
+    }
+
+    .container{
+      width:94%;
+      max-width:1000px;
+      margin:20px auto;
+    }
+
+    .welcome{
+      background:linear-gradient(135deg,#171b35,#22264a);
+      padding:22px;
+      border-radius:16px;
+      margin-bottom:20px;
+    }
+
+    .welcome p{
+      color:#aaa;
+      margin-top:6px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:14px;
+    }
+
+    .card{
+      background:#171b35;
+      padding:20px;
+      border-radius:16px;
+      border:1px solid #282d4b;
+    }
+
+    .card h3{
+      margin-bottom:8px;
+    }
+
+    .card p{
+      color:#aaa;
+      font-size:14px;
+    }
+
+    .number{
+      font-size:28px;
+      font-weight:bold;
+      color:#a78bfa;
+      margin-top:8px;
+    }
+
+    .section{
+      background:#171b35;
+      padding:20px;
+      border-radius:16px;
+      margin-top:20px;
+    }
+
+    .section h2{
+      margin-bottom:15px;
+    }
+
+    .status{
+      color:#4ade80;
+      margin-top:10px;
+    }
+
+    @media(max-width:600px){
+      .grid{
+        grid-template-columns:1fr 1fr;
+      }
+
+      .card{
+        padding:15px;
+      }
+
+      .card h3{
+        font-size:15px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<!-- ================= LOGIN ================= -->
+  <!-- LOGIN -->
+  <div id="loginScreen" class="login-box">
 
-<section id="loginPage">
+    <h1>EXAMOS AI</h1>
+    <div class="sub">Admin Panel</div>
 
-  <div class="login-card">
-
-    <div class="logo">EXAMOS AI</div>
-
-    <div class="login-subtitle">
-      Administrator Panel
-    </div>
-
-    <div class="input-group">
-      <label>Admin Email</label>
-      <input
-        id="adminEmail"
-        type="email"
-        placeholder="admin@example.com"
-      >
-    </div>
-
-    <div class="input-group">
-      <label>Password</label>
-      <input
-        id="adminPassword"
-        type="password"
-        placeholder="Admin password"
-      >
-    </div>
-
-    <button
-      class="primary-btn"
-      onclick="adminLogin()"
+    <input
+      type="email"
+      id="email"
+      placeholder="Admin Email"
+      autocomplete="email"
     >
-      🔐 Admin Login
-    </button>
 
-    <div
-      id="loginError"
-      class="error"
-    ></div>
+    <input
+      type="password"
+      id="password"
+      placeholder="Password"
+      autocomplete="current-password"
+    >
+
+    <button id="loginBtn">Login as Admin</button>
+
+    <div id="loginError" class="error"></div>
 
   </div>
 
-</section>
+
+  <!-- ADMIN PANEL -->
+  <div id="adminPanel">
+
+    <header>
+      <div class="logo">EXAMOS AI</div>
+      <button class="logout" id="logoutBtn">Logout</button>
+    </header>
+
+    <div class="container">
+
+      <div class="welcome">
+        <h2>Admin Dashboard 👋</h2>
+        <p id="adminEmail">Checking admin account...</p>
+        <div class="status">● Secure Admin Access</div>
+      </div>
 
 
-<!-- ================= ADMIN APP ================= -->
+      <div class="grid">
 
-<section
-  id="adminApp"
-  class="hidden"
->
+        <div class="card">
+          <h3>👨‍🎓 Students</h3>
+          <p>Total Students</p>
+          <div class="number" id="studentCount">0</div>
+        </div>
 
-  <header class="topbar">
+        <div class="card">
+          <h3>📝 Tests</h3>
+          <p>Total Tests</p>
+          <div class="number" id="testCount">0</div>
+        </div>
 
-    <div class="top-title">
-      EXAMOS <span>AI</span> — Admin
+        <div class="card">
+          <h3>📚 Practice</h3>
+          <p>Total Practice</p>
+          <div class="number" id="practiceCount">0</div>
+        </div>
+
+        <div class="card">
+          <h3>🤖 AI Usage</h3>
+          <p>AI Requests</p>
+          <div class="number" id="aiCount">0</div>
+        </div>
+
+      </div>
+
+
+      <div class="section">
+        <h2>📚 Bihar Board Syllabus</h2>
+        <p style="color:#aaa">
+          यहाँ से Class 9–12 का Bihar Board syllabus manage किया जाएगा।
+        </p>
+      </div>
+
+
+      <div class="section">
+        <h2>❓ Question Management</h2>
+        <p style="color:#aaa">
+          यहाँ AI और manually created questions manage किए जाएंगे।
+        </p>
+      </div>
+
+
+      <div class="section">
+        <h2>📊 Student Performance</h2>
+        <p style="color:#aaa">
+          Weak chapters, topics और student performance यहाँ दिखाई जाएगी।
+        </p>
+      </div>
+
+
+      <div class="section">
+        <h2>💬 Feedback</h2>
+        <p style="color:#aaa">
+          Students का feedback यहाँ manage किया जाएगा।
+        </p>
+      </div>
+
     </div>
-
-    <button
-      class="logout-btn"
-      onclick="adminLogout()"
-    >
-      Logout
-    </button>
-
-  </header>
-
-
-  <div class="layout">
-
-    <!-- SIDEBAR -->
-
-    <aside class="sidebar">
-
-      <button
-        class="nav-btn active"
-        onclick="showPage('dashboard',this)"
-      >
-        📊 Dashboard
-      </button>
-
-      <button
-        class="nav-btn"
-        onclick="showPage('students',this)"
-      >
-        👨‍🎓 Students
-      </button>
-
-      <button
-        class="nav-btn"
-        onclick="showPage('syllabus',this)"
-      >
-        📚 Syllabus
-      </button>
-
-      <button
-        class="nav-btn"
-        onclick="showPage('questions',this)"
-      >
-        📝 Questions
-      </button>
-
-      <button
-        class="nav-btn"
-        onclick="showPage('aiusage',this)"
-      >
-        🤖 AI Usage
-      </button>
-
-      <button
-        class="nav-btn"
-        onclick="showPage('performance',this)"
-      >
-        📈 Performance
-      </button>
-
-      <button
-        class="nav-btn"
-        onclick="showPage('feedback',this)"
-      >
-        💬 Feedback
-      </button>
-
-      <button
-        class="nav-btn"
-        onclick="showPage('announcements',this)"
-      >
-        📢 Announcements
-      </button>
-
-      <button
-        class="nav-btn"
-        onclick="showPage('settings',this)"
-      >
-        ⚙️ Settings
-      </button>
-
-    </aside>
-
-
-    <!-- CONTENT -->
-
-    <main class="content">
-
-
-      <!-- DASHBOARD -->
-
-      <section
-        id="page-dashboard"
-        class="admin-page"
-      >
-
-        <h1 class="page-title">
-          Dashboard
-        </h1>
-
-        <p class="page-subtitle">
-          EXAMOS AI का overview
-        </p>
-
-
-        <div class="stats">
-
-          <div class="stat-card">
-            <div class="stat-icon">👨‍🎓</div>
-            <div class="stat-label">
-              Total Students
-            </div>
-            <div
-              class="stat-value"
-              id="totalStudents"
-            >
-              0
-            </div>
-          </div>
-
-
-          <div class="stat-card">
-            <div class="stat-icon">📝</div>
-            <div class="stat-label">
-              Total Tests
-            </div>
-            <div
-              class="stat-value"
-              id="totalTests"
-            >
-              0
-            </div>
-          </div>
-
-
-          <div class="stat-card">
-            <div class="stat-icon">🎯</div>
-            <div class="stat-label">
-              Practice Sessions
-            </div>
-            <div
-              class="stat-value"
-              id="totalPractice"
-            >
-              0
-            </div>
-          </div>
-
-
-          <div class="stat-card">
-            <div class="stat-icon">🤖</div>
-            <div class="stat-label">
-              AI Requests
-            </div>
-            <div
-              class="stat-value"
-              id="totalAI"
-            >
-              0
-            </div>
-          </div>
-
-        </div>
-
-
-        <div class="grid">
-
-          <div class="card">
-
-            <h3>📈 Recent Activity</h3>
-
-            <p>
-              Firebase connect होने के बाद यहाँ
-              students और activities दिखाई जाएँगी।
-            </p>
-
-          </div>
-
-
-          <div class="card">
-
-            <h3>⚡ Quick Actions</h3>
-
-            <button
-              class="action-btn primary"
-              onclick="showPageById('syllabus')"
-            >
-              + Add Syllabus
-            </button>
-
-            <button
-              class="action-btn"
-              onclick="showPageById('announcements')"
-            >
-              📢 Announcement
-            </button>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-      <!-- STUDENTS -->
-
-      <section
-        id="page-students"
-        class="admin-page hidden"
-      >
-
-        <h1 class="page-title">
-          Students
-        </h1>
-
-        <p class="page-subtitle">
-          Registered students
-        </p>
-
-
-        <div class="card">
-
-          <div class="table-wrap">
-
-            <table>
-
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Class</th>
-                  <th>Stream</th>
-                  <th>Board</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-
-              <tbody id="studentsTable">
-
-                <tr>
-                  <td colspan="6">
-                    अभी Firebase से students load नहीं हुए हैं।
-                  </td>
-                </tr>
-
-              </tbody>
-
-            </table>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-      <!-- SYLLABUS -->
-
-      <section
-        id="page-syllabus"
-        class="admin-page hidden"
-      >
-
-        <h1 class="page-title">
-          Bihar Board Syllabus
-        </h1>
-
-        <p class="page-subtitle">
-          Class → Stream → Subject → Chapter → Topic
-        </p>
-
-
-        <div class="card">
-
-          <div class="form-grid">
-
-            <div class="input-group">
-
-              <label>Class</label>
-
-              <select id="syllabusClass">
-
-                <option value="">Select Class</option>
-                <option value="9">Class 9</option>
-                <option value="10">Class 10</option>
-                <option value="11">Class 11</option>
-                <option value="12">Class 12</option>
-
-              </select>
-
-            </div>
-
-
-            <div class="input-group">
-
-              <label>Stream</label>
-
-              <select id="syllabusStream">
-
-                <option value="">Select Stream</option>
-                <option>Science</option>
-                <option>Commerce</option>
-                <option>Arts</option>
-
-              </select>
-
-            </div>
-
-
-            <div class="input-group">
-
-              <label>Subject</label>
-
-              <input
-                id="syllabusSubject"
-                placeholder="Physics"
-              >
-
-            </div>
-
-
-            <div class="input-group">
-
-              <label>Chapter</label>
-
-              <input
-                id="syllabusChapter"
-                placeholder="Chapter name"
-              >
-
-            </div>
-
-
-            <div class="input-group full">
-
-              <label>Topics</label>
-
-              <textarea
-                id="syllabusTopics"
-                rows="5"
-                placeholder="Topic 1&#10;Topic 2&#10;Topic 3"
-              ></textarea>
-
-            </div>
-
-
-            <div class="full">
-
-              <button
-                class="action-btn primary"
-                onclick="saveSyllabus()"
-              >
-                💾 Save Syllabus
-              </button>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-      <!-- QUESTIONS -->
-
-      <section
-        id="page-questions"
-        class="admin-page hidden"
-      >
-
-        <h1 class="page-title">
-          Questions
-        </h1>
-
-        <p class="page-subtitle">
-          AI और manual questions
-        </p>
-
-
-        <div class="card">
-
-          <div class="form-grid">
-
-            <div class="input-group">
-
-              <label>Class</label>
-
-              <select>
-
-                <option>Class 9</option>
-                <option>Class 10</option>
-                <option>Class 11</option>
-                <option>Class 12</option>
-
-              </select>
-
-            </div>
-
-
-            <div class="input-group">
-
-              <label>Subject</label>
-
-              <input
-                placeholder="Mathematics"
-              >
-
-            </div>
-
-
-            <div class="input-group">
-
-              <label>Chapter</label>
-
-              <input
-                placeholder="Chapter"
-              >
-
-            </div>
-
-
-            <div class="input-group">
-
-              <label>Difficulty</label>
-
-              <select>
-
-                <option>Easy</option>
-                <option>Medium</option>
-                <option>Hard</option>
-
-              </select>
-
-            </div>
-
-          </div>
-
-          <br>
-
-          <button
-            class="action-btn primary"
-            onclick="alert('Question management Firebase connect होने के बाद activate होगा.')"
-          >
-            + Add Question
-          </button>
-
-        </div>
-
-      </section>
-
-
-      <!-- AI USAGE -->
-
-      <section
-        id="page-aiusage"
-        class="admin-page hidden"
-      >
-
-        <h1 class="page-title">
-          AI Usage
-        </h1>
-
-        <p class="page-subtitle">
-          Gemini AI usage overview
-        </p>
-
-
-        <div class="stats">
-
-          <div class="stat-card">
-            <div class="stat-label">
-              Test Generation
-            </div>
-            <div
-              class="stat-value"
-              id="aiTests"
-            >
-              0
-            </div>
-          </div>
-
-
-          <div class="stat-card">
-            <div class="stat-label">
-              Practice
-            </div>
-            <div
-              class="stat-value"
-              id="aiPractice"
-            >
-              0
-            </div>
-          </div>
-
-
-          <div class="stat-card">
-            <div class="stat-label">
-              Concept
-            </div>
-            <div
-              class="stat-value"
-              id="aiConcept"
-            >
-              0
-            </div>
-          </div>
-
-
-          <div class="stat-card">
-            <div class="stat-label">
-              Solution Analysis
-            </div>
-            <div
-              class="stat-value"
-              id="aiAnalysis"
-            >
-              0
-            </div>
-          </div>
-
-        </div>
-
-      </section>
-
-
-      <!-- PERFORMANCE -->
-
-      <section
-        id="page-performance"
-        class="admin-page hidden"
-      >
-
-        <h1 class="page-title">
-          Student Performance
-        </h1>
-
-        <p class="page-subtitle">
-          Weak subjects, chapters और topics
-        </p>
-
-
-        <div class="card">
-
-          <div class="table-wrap">
-
-            <table>
-
-              <thead>
-
-                <tr>
-                  <th>Student</th>
-                  <th>Subject</th>
-                  <th>Chapter</th>
-                  <th>Score</th>
-                  <th>Weak Topic</th>
-                </tr>
-
-              </thead>
-
-              <tbody>
-
-                <tr>
-                  <td colspan="5">
-                    Performance data Firebase connect होने के बाद आएगा।
-                  </td>
-                </tr>
-
-              </tbody>
-
-            </table>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-      <!-- FEEDBACK -->
-
-      <section
-        id="page-feedback"
-        class="admin-page hidden"
-      >
-
-        <h1 class="page-title">
-          Student Feedback
-        </h1>
-
-        <p class="page-subtitle">
-          Students की feedback और ratings
-        </p>
-
-
-        <div class="card">
-
-          <div class="table-wrap">
-
-            <table>
-
-              <thead>
-
-                <tr>
-                  <th>Student</th>
-                  <th>Rating</th>
-                  <th>Feedback</th>
-                  <th>Date</th>
-                </tr>
-
-              </thead>
-
-              <tbody>
-
-                <tr>
-                  <td colspan="4">
-                    Feedback Firebase connect होने के बाद दिखाई देगा।
-                  </td>
-                </tr>
-
-              </tbody>
-
-            </table>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-      <!-- ANNOUNCEMENTS -->
-
-      <section
-        id="page-announcements"
-        class="admin-page hidden"
-      >
-
-        <h1 class="page-title">
-          Announcements
-        </h1>
-
-        <p class="page-subtitle">
-          Students के लिए announcement भेजें
-        </p>
-
-
-        <div class="card">
-
-          <div class="input-group">
-
-            <label>Title</label>
-
-            <input
-              id="announcementTitle"
-              placeholder="New announcement"
-            >
-
-          </div>
-
-
-          <div class="input-group">
-
-            <label>Message</label>
-
-            <textarea
-              id="announcementMessage"
-              rows="6"
-              placeholder="Announcement message..."
-            ></textarea>
-
-          </div>
-
-
-          <button
-            class="action-btn primary"
-            onclick="sendAnnouncement()"
-          >
-            📢 Publish Announcement
-          </button>
-
-        </div>
-
-      </section>
-
-
-      <!-- SETTINGS -->
-
-      <section
-        id="page-settings"
-        class="admin-page hidden"
-      >
-
-        <h1 class="page-title">
-          Settings
-        </h1>
-
-        <p class="page-subtitle">
-          Admin settings
-        </p>
-
-
-        <div class="card">
-
-          <h3>EXAMOS AI</h3>
-
-          <br>
-
-          <p>
-            Board: Bihar Board
-          </p>
-
-          <p>
-            Classes: 9–12
-          </p>
-
-          <p>
-            AI Engine: Gemini
-          </p>
-
-          <p>
-            Authentication: Firebase
-          </p>
-
-        </div>
-
-      </section>
-
-
-    </main>
-
   </div>
 
-</section>
+
+<script type="module">
+
+  import { auth, db } from "./firebase-config.js";
+
+  import {
+    signInWithEmailAndPassword,
+    onAuthStateChanged,
+    signOut
+  } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+
+  import {
+    doc,
+    getDoc
+  } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
 
-<script>
+  const loginScreen = document.getElementById("loginScreen");
+  const adminPanel = document.getElementById("adminPanel");
 
-/* =========================================================
-   DEMO ADMIN LOGIN
-   Firebase अगले step में लगाया जाएगा
-========================================================= */
+  const emailInput = document.getElementById("email");
+  const passwordInput = document.getElementById("password");
 
-function adminLogin(){
+  const loginBtn = document.getElementById("loginBtn");
+  const logoutBtn = document.getElementById("logoutBtn");
 
-  const email =
-    document.getElementById(
-      "adminEmail"
-    ).value.trim();
-
-  const password =
-    document.getElementById(
-      "adminPassword"
-    ).value.trim();
-
-  const error =
-    document.getElementById(
-      "loginError"
-    );
+  const loginError = document.getElementById("loginError");
+  const adminEmail = document.getElementById("adminEmail");
 
 
-  if(!email || !password){
+  // ==============================
+  // ADMIN LOGIN
+  // ==============================
 
-    error.textContent =
-      "Email और password डालें।";
+  loginBtn.addEventListener("click", async () => {
 
-    return;
-  }
+    const email = emailInput.value.trim();
+    const password = passwordInput.value;
 
+    loginError.textContent = "";
 
-  /*
-    अभी demo login है।
-    Firebase Authentication अगले step में connect होगा।
-  */
+    if(!email || !password){
+      loginError.textContent = "Email और password डालें।";
+      return;
+    }
 
-  if(
-    email === "admin@examos.ai" &&
-    password === "admin123"
-  ){
+    loginBtn.disabled = true;
+    loginBtn.textContent = "Checking...";
 
-    localStorage.setItem(
-      "examos_admin_demo",
-      "true"
-    );
+    try{
 
-    openAdmin();
-
-  }else{
-
-    error.textContent =
-      "Invalid admin login.";
-
-  }
-
-}
-
-
-/* =========================================================
-   OPEN ADMIN
-========================================================= */
-
-function openAdmin(){
-
-  document
-    .getElementById("loginPage")
-    .classList.add("hidden");
-
-  document
-    .getElementById("adminApp")
-    .classList.remove("hidden");
-
-}
-
-
-/* =========================================================
-   LOGOUT
-========================================================= */
-
-function adminLogout(){
-
-  localStorage.removeItem(
-    "examos_admin_demo"
-  );
-
-  location.reload();
-
-}
-
-
-/* =========================================================
-   PAGE NAVIGATION
-========================================================= */
-
-function showPage(page, button){
-
-  document
-    .querySelectorAll(".admin-page")
-    .forEach(section => {
-
-      section.classList.add("hidden");
-
-    });
-
-
-  const target =
-    document.getElementById(
-      "page-" + page
-    );
-
-
-  if(target){
-
-    target.classList.remove(
-      "hidden"
-    );
-
-  }
-
-
-  document
-    .querySelectorAll(".nav-btn")
-    .forEach(btn => {
-
-      btn.classList.remove(
-        "active"
+      await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
       );
 
-    });
+    }catch(error){
+
+      console.error(error);
+
+      loginError.textContent =
+        "Login failed. Email या password गलत है।";
+
+    }
+
+    loginBtn.disabled = false;
+    loginBtn.textContent = "Login as Admin";
+
+  });
 
 
-  if(button){
+  // ==============================
+  // CHECK ADMIN ROLE
+  // ==============================
 
-    button.classList.add(
-      "active"
-    );
+  onAuthStateChanged(auth, async (user) => {
 
-  }
+    if(!user){
 
-}
+      loginScreen.style.display = "block";
+      adminPanel.style.display = "none";
+
+      return;
+    }
 
 
-/* =========================================================
-   QUICK PAGE
-========================================================= */
+    try{
 
-function showPageById(page){
-
-  document
-    .querySelectorAll(".nav-btn")
-    .forEach(btn => {
-
-      btn.classList.remove(
-        "active"
+      const adminRef = doc(
+        db,
+        "admins",
+        user.uid
       );
 
-    });
+      const adminSnap = await getDoc(adminRef);
 
 
-  showPage(page);
+      // ADMIN DOCUMENT NOT FOUND
+      if(!adminSnap.exists()){
 
-}
+        alert(
+          "Access Denied: यह account Admin नहीं है।"
+        );
 
+        await signOut(auth);
 
-/* =========================================================
-   SYLLABUS DEMO
-========================================================= */
-
-function saveSyllabus(){
-
-  const cls =
-    document.getElementById(
-      "syllabusClass"
-    ).value;
-
-  const subject =
-    document.getElementById(
-      "syllabusSubject"
-    ).value.trim();
-
-  const chapter =
-    document.getElementById(
-      "syllabusChapter"
-    ).value.trim();
+        return;
+      }
 
 
-  if(!cls || !subject || !chapter){
-
-    alert(
-      "Class, Subject और Chapter भरें।"
-    );
-
-    return;
-
-  }
+      const adminData = adminSnap.data();
 
 
-  alert(
-    "Syllabus form तैयार है। Firebase connect होने के बाद यह data Firestore में save होगा।"
-  );
+      // ROLE CHECK
+      if(adminData.role !== "admin"){
 
-}
+        alert(
+          "Access Denied: Admin permission नहीं है।"
+        );
 
+        await signOut(auth);
 
-/* =========================================================
-   ANNOUNCEMENT DEMO
-========================================================= */
-
-function sendAnnouncement(){
-
-  const title =
-    document.getElementById(
-      "announcementTitle"
-    ).value.trim();
-
-  const message =
-    document.getElementById(
-      "announcementMessage"
-    ).value.trim();
+        return;
+      }
 
 
-  if(!title || !message){
+      // ==============================
+      // ADMIN VERIFIED
+      // ==============================
 
-    alert(
-      "Title और message दोनों भरें।"
-    );
+      loginScreen.style.display = "none";
+      adminPanel.style.display = "block";
 
-    return;
+      adminEmail.textContent =
+        "Logged in as: " + user.email;
 
-  }
-
-
-  alert(
-    "Announcement form तैयार है। Firebase connect होने के बाद students को publish होगा।"
-  );
-
-}
+      console.log(
+        "ADMIN VERIFIED:",
+        user.uid
+      );
 
 
-/* =========================================================
-   AUTO LOGIN FOR DEMO
-========================================================= */
+    }catch(error){
 
-if(
-  localStorage.getItem(
-    "examos_admin_demo"
-  ) === "true"
-){
+      console.error(
+        "Admin verification error:",
+        error
+      );
 
-  openAdmin();
+      alert(
+        "Admin verification failed."
+      );
 
-}
+      await signOut(auth);
+    }
+
+  });
+
+
+  // ==============================
+  // LOGOUT
+  // ==============================
+
+  logoutBtn.addEventListener("click", async () => {
+
+    await signOut(auth);
+
+  });
 
 </script>
 
