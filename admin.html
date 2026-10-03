@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>EXAMOS AI — Admin Panel</title>
 
   <style>
@@ -19,6 +20,28 @@
       min-height:100vh;
     }
 
+    button{
+      border:0;
+      cursor:pointer;
+    }
+
+    input,
+    select{
+      width:100%;
+      padding:13px;
+      margin:7px 0;
+      border:1px solid #343957;
+      border-radius:10px;
+      background:#0e1122;
+      color:white;
+      outline:none;
+    }
+
+    select option{
+      background:#171b35;
+      color:white;
+    }
+
     .login-box{
       width:92%;
       max-width:400px;
@@ -29,7 +52,7 @@
       box-shadow:0 10px 35px #0008;
     }
 
-    h1{
+    .login-box h1{
       text-align:center;
       margin-bottom:8px;
     }
@@ -40,32 +63,30 @@
       margin-bottom:25px;
     }
 
-    input{
+    .primary{
       width:100%;
       padding:14px;
-      margin:8px 0;
-      border:1px solid #343957;
-      border-radius:10px;
-      background:#0e1122;
-      color:white;
-      outline:none;
-    }
-
-    button{
-      width:100%;
-      padding:14px;
-      margin-top:12px;
-      border:0;
+      margin-top:10px;
       border-radius:10px;
       background:#8b5cf6;
       color:white;
       font-size:16px;
       font-weight:bold;
-      cursor:pointer;
     }
 
-    button:hover{
+    .primary:hover{
       opacity:.9;
+    }
+
+    .danger{
+      background:#ef4444 !important;
+    }
+
+    .secondary{
+      background:#282d4b;
+      color:white;
+      padding:10px 14px;
+      border-radius:9px;
     }
 
     .error{
@@ -81,13 +102,14 @@
 
     header{
       background:#171b35;
-      padding:16px;
+      padding:15px;
       display:flex;
       justify-content:space-between;
       align-items:center;
       position:sticky;
       top:0;
-      z-index:10;
+      z-index:20;
+      border-bottom:1px solid #292e4b;
     }
 
     .logo{
@@ -101,13 +123,15 @@
       margin:0;
       padding:9px 14px;
       background:#ef4444;
-      font-size:14px;
+      color:white;
+      border-radius:9px;
     }
 
     .container{
       width:94%;
-      max-width:1000px;
+      max-width:1100px;
       margin:20px auto;
+      padding-bottom:50px;
     }
 
     .welcome{
@@ -120,6 +144,11 @@
     .welcome p{
       color:#aaa;
       margin-top:6px;
+    }
+
+    .status{
+      color:#4ade80;
+      margin-top:10px;
     }
 
     .grid{
@@ -156,28 +185,138 @@
       padding:20px;
       border-radius:16px;
       margin-top:20px;
+      border:1px solid #282d4b;
     }
 
     .section h2{
-      margin-bottom:15px;
+      margin-bottom:8px;
     }
 
-    .status{
-      color:#4ade80;
-      margin-top:10px;
+    .section-desc{
+      color:#aaa;
+      font-size:14px;
+      margin-bottom:18px;
     }
 
-    @media(max-width:600px){
+    .form-grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:12px;
+    }
+
+    .form-box{
+      background:#101329;
+      padding:15px;
+      border-radius:12px;
+      border:1px solid #282d4b;
+    }
+
+    .form-box h3{
+      margin-bottom:8px;
+      font-size:16px;
+    }
+
+    .item-list{
+      margin-top:15px;
+    }
+
+    .item{
+      background:#101329;
+      border:1px solid #282d4b;
+      border-radius:10px;
+      padding:12px;
+      margin-top:8px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+    }
+
+    .item-name{
+      font-weight:bold;
+    }
+
+    .item-meta{
+      color:#999;
+      font-size:12px;
+      margin-top:3px;
+    }
+
+    .delete-btn{
+      background:#ef4444;
+      color:white;
+      padding:8px 10px;
+      border-radius:8px;
+      flex-shrink:0;
+    }
+
+    .empty{
+      color:#777;
+      padding:12px 0;
+      font-size:14px;
+    }
+
+    .path{
+      background:#0b0e1e;
+      border:1px solid #292e4b;
+      padding:12px;
+      border-radius:10px;
+      color:#a78bfa;
+      margin-top:15px;
+      font-size:13px;
+      overflow-wrap:anywhere;
+    }
+
+    .hidden{
+      display:none !important;
+    }
+
+    .ai-note{
+      border-left:4px solid #8b5cf6;
+      padding:12px;
+      background:#101329;
+      color:#bbb;
+      border-radius:8px;
+      margin-top:12px;
+      line-height:1.5;
+    }
+
+    @media(max-width:700px){
+
+      .form-grid{
+        grid-template-columns:1fr;
+      }
+
       .grid{
         grid-template-columns:1fr 1fr;
       }
 
-      .card{
+      .section{
         padding:15px;
       }
 
+      .item{
+        align-items:flex-start;
+      }
+    }
+
+    @media(max-width:430px){
+
+      .grid{
+        grid-template-columns:1fr 1fr;
+        gap:9px;
+      }
+
+      .card{
+        padding:14px;
+      }
+
       .card h3{
-        font-size:15px;
+        font-size:14px;
+      }
+
+      .number{
+        font-size:24px;
       }
     }
   </style>
@@ -185,11 +324,17 @@
 
 <body>
 
-  <!-- LOGIN -->
+  <!-- =========================
+       LOGIN
+  ========================== -->
+
   <div id="loginScreen" class="login-box">
 
     <h1>EXAMOS AI</h1>
-    <div class="sub">Admin Panel</div>
+
+    <div class="sub">
+      Secure Admin Panel
+    </div>
 
     <input
       type="email"
@@ -205,264 +350,2717 @@
       autocomplete="current-password"
     >
 
-    <button id="loginBtn">Login as Admin</button>
+    <button class="primary" id="loginBtn">
+      Login as Admin
+    </button>
 
     <div id="loginError" class="error"></div>
 
   </div>
 
 
-  <!-- ADMIN PANEL -->
+  <!-- =========================
+       ADMIN PANEL
+  ========================== -->
+
   <div id="adminPanel">
 
     <header>
-      <div class="logo">EXAMOS AI</div>
-      <button class="logout" id="logoutBtn">Logout</button>
+
+      <div class="logo">
+        EXAMOS AI
+      </div>
+
+      <button class="logout" id="logoutBtn">
+        Logout
+      </button>
+
     </header>
+
 
     <div class="container">
 
+      <!-- WELCOME -->
+
       <div class="welcome">
-        <h2>Admin Dashboard 👋</h2>
-        <p id="adminEmail">Checking admin account...</p>
-        <div class="status">● Secure Admin Access</div>
+
+        <h2>
+          Admin Dashboard 👋
+        </h2>
+
+        <p id="adminEmail">
+          Checking admin account...
+        </p>
+
+        <div class="status">
+          ● Secure Admin Access
+        </div>
+
       </div>
 
+
+      <!-- STATS -->
 
       <div class="grid">
 
         <div class="card">
-          <h3>👨‍🎓 Students</h3>
-          <p>Total Students</p>
-          <div class="number" id="studentCount">0</div>
+          <h3>🏫 Boards</h3>
+          <p>Total Boards</p>
+          <div class="number" id="boardCount">0</div>
         </div>
 
         <div class="card">
-          <h3>📝 Tests</h3>
-          <p>Total Tests</p>
-          <div class="number" id="testCount">0</div>
+          <h3>🎓 Classes</h3>
+          <p>Total Classes</p>
+          <div class="number" id="classCount">0</div>
         </div>
 
         <div class="card">
-          <h3>📚 Practice</h3>
-          <p>Total Practice</p>
-          <div class="number" id="practiceCount">0</div>
+          <h3>📚 Subjects</h3>
+          <p>Total Subjects</p>
+          <div class="number" id="subjectCount">0</div>
         </div>
 
         <div class="card">
-          <h3>🤖 AI Usage</h3>
-          <p>AI Requests</p>
-          <div class="number" id="aiCount">0</div>
+          <h3>📖 Chapters</h3>
+          <p>Total Chapters</p>
+          <div class="number" id="chapterCount">0</div>
         </div>
 
       </div>
 
 
+      <!-- =========================
+           CURRICULUM
+      ========================== -->
+
       <div class="section">
-        <h2>📚 Bihar Board Syllabus</h2>
-        <p style="color:#aaa">
-          यहाँ से Class 9–12 का Bihar Board syllabus manage किया जाएगा।
-        </p>
+
+        <h2>
+          📚 Curriculum Management
+        </h2>
+
+        <div class="section-desc">
+          यहाँ से तुम खुद Board, Class, Stream, Subject, Chapter और Topic बना सकते हो।
+        </div>
+
+
+        <!-- BOARD -->
+
+        <div class="form-grid">
+
+          <div class="form-box">
+
+            <h3>🏫 Add Board</h3>
+
+            <input
+              id="boardName"
+              placeholder="जैसे Bihar Board"
+            >
+
+            <input
+              id="boardCode"
+              placeholder="जैसे BSEB"
+            >
+
+            <button
+              class="primary"
+              id="addBoardBtn"
+            >
+              + Add Board
+            </button>
+
+          </div>
+
+
+          <!-- CLASS -->
+
+          <div class="form-box">
+
+            <h3>🎓 Add Class</h3>
+
+            <select id="classBoard">
+              <option value="">
+                पहले Board चुनें
+              </option>
+            </select>
+
+            <input
+              id="className"
+              placeholder="जैसे Class 12"
+            >
+
+            <button
+              class="primary"
+              id="addClassBtn"
+            >
+              + Add Class
+            </button>
+
+          </div>
+
+
+          <!-- SUBJECT -->
+
+          <div class="form-box">
+
+            <h3>📚 Add Subject</h3>
+
+            <select id="subjectBoard">
+              <option value="">
+                Board चुनें
+              </option>
+            </select>
+
+            <select id="subjectClass">
+              <option value="">
+                Class चुनें
+              </option>
+            </select>
+
+            <input
+              id="subjectName"
+              placeholder="जैसे Physics"
+            >
+
+            <input
+              id="subjectStream"
+              placeholder="Stream: Science / Commerce / Arts / General"
+            >
+
+            <button
+              class="primary"
+              id="addSubjectBtn"
+            >
+              + Add Subject
+            </button>
+
+          </div>
+
+
+          <!-- CHAPTER -->
+
+          <div class="form-box">
+
+            <h3>📖 Add Chapter</h3>
+
+            <select id="chapterBoard">
+              <option value="">
+                Board चुनें
+              </option>
+            </select>
+
+            <select id="chapterClass">
+              <option value="">
+                Class चुनें
+              </option>
+            </select>
+
+            <select id="chapterSubject">
+              <option value="">
+                Subject चुनें
+              </option>
+            </select>
+
+            <input
+              id="chapterName"
+              placeholder="जैसे Chapter 1 — Electric Charges"
+            >
+
+            <button
+              class="primary"
+              id="addChapterBtn"
+            >
+              + Add Chapter
+            </button>
+
+          </div>
+
+
+          <!-- TOPIC -->
+
+          <div class="form-box">
+
+            <h3>📝 Add Topic</h3>
+
+            <select id="topicBoard">
+              <option value="">
+                Board चुनें
+              </option>
+            </select>
+
+            <select id="topicClass">
+              <option value="">
+                Class चुनें
+              </option>
+            </select>
+
+            <select id="topicSubject">
+              <option value="">
+                Subject चुनें
+              </option>
+            </select>
+
+            <select id="topicChapter">
+              <option value="">
+                Chapter चुनें
+              </option>
+            </select>
+
+            <input
+              id="topicName"
+              placeholder="जैसे Coulomb's Law"
+            >
+
+            <button
+              class="primary"
+              id="addTopicBtn"
+            >
+              + Add Topic
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <!-- CURRENT PATH -->
+
+        <div
+          class="path"
+          id="currentPath"
+        >
+          Curriculum path यहाँ दिखाई देगा।
+        </div>
+
+
+        <!-- LISTS -->
+
+        <div class="item-list">
+
+          <h3>
+            📋 Current Curriculum
+          </h3>
+
+          <div id="curriculumList">
+            <div class="empty">
+              अभी कोई curriculum नहीं है।
+            </div>
+          </div>
+
+        </div>
+
       </div>
 
 
+      <!-- =========================
+           AI SYSTEM
+      ========================== -->
+
       <div class="section">
-        <h2>❓ Question Management</h2>
-        <p style="color:#aaa">
-          यहाँ AI और manually created questions manage किए जाएंगे।
-        </p>
+
+        <h2>
+          🤖 AI Learning Engine
+        </h2>
+
+        <div class="ai-note">
+
+          Admin सिर्फ syllabus बनाएगा।
+          <br><br>
+
+          Questions, tests, practice,
+          explanations, weak-topic practice,
+          retest और AI teaching बाद में
+          इसी curriculum के आधार पर AI संभालेगा।
+
+        </div>
+
       </div>
 
 
+      <!-- STUDENTS -->
+
       <div class="section">
-        <h2>📊 Student Performance</h2>
-        <p style="color:#aaa">
-          Weak chapters, topics और student performance यहाँ दिखाई जाएगी।
+
+        <h2>
+          👨‍🎓 Students
+        </h2>
+
+        <p class="section-desc">
+          Student accounts और उनकी activity यहाँ दिखाई जाएगी।
         </p>
+
+        <div class="number" id="studentCount2">
+          0
+        </div>
+
       </div>
 
 
+      <!-- PERFORMANCE -->
+
       <div class="section">
-        <h2>💬 Feedback</h2>
-        <p style="color:#aaa">
-          Students का feedback यहाँ manage किया जाएगा।
+
+        <h2>
+          📊 Student Performance
+        </h2>
+
+        <p class="section-desc">
+          AI student performance और weak topics का analysis बाद में यहाँ दिखाएगा।
         </p>
+
+      </div>
+
+
+      <!-- FEEDBACK -->
+
+      <div class="section">
+
+        <h2>
+          💬 Feedback
+        </h2>
+
+        <p class="section-desc">
+          Students का feedback यहाँ दिखाई देगा।
+        </p>
+
+      </div>
+
+
+      <!-- ANNOUNCEMENT -->
+
+      <div class="section">
+
+        <h2>
+          📢 Announcements
+        </h2>
+
+        <input
+          id="announcementTitle"
+          placeholder="Announcement title"
+        >
+
+        <input
+          id="announcementText"
+          placeholder="Announcement message"
+        >
+
+        <button
+          class="primary"
+          id="announcementBtn"
+        >
+          Publish Announcement
+        </button>
+
       </div>
 
     </div>
+
   </div>
 
 
-<script type="module">
+  <!-- =========================
+       FIREBASE + APP
+  ========================== -->
 
-  import { auth, db } from "./firebase-config.js";
+  <script type="module">
 
-  import {
-    signInWithEmailAndPassword,
-    onAuthStateChanged,
-    signOut
-  } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
-
-  import {
-    doc,
-    getDoc
-  } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+    import {
+      auth,
+      db
+    } from "./firebase-config.js";
 
 
-  const loginScreen = document.getElementById("loginScreen");
-  const adminPanel = document.getElementById("adminPanel");
-
-  const emailInput = document.getElementById("email");
-  const passwordInput = document.getElementById("password");
-
-  const loginBtn = document.getElementById("loginBtn");
-  const logoutBtn = document.getElementById("logoutBtn");
-
-  const loginError = document.getElementById("loginError");
-  const adminEmail = document.getElementById("adminEmail");
+    import {
+      signInWithEmailAndPassword,
+      onAuthStateChanged,
+      signOut
+    } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 
 
-  // ==============================
-  // ADMIN LOGIN
-  // ==============================
-
-  loginBtn.addEventListener("click", async () => {
-
-    const email = emailInput.value.trim();
-    const password = passwordInput.value;
-
-    loginError.textContent = "";
-
-    if(!email || !password){
-      loginError.textContent = "Email और password डालें।";
-      return;
-    }
-
-    loginBtn.disabled = true;
-    loginBtn.textContent = "Checking...";
-
-    try{
-
-      await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-
-    }catch(error){
-
-      console.error(error);
-
-      loginError.textContent =
-        "Login failed. Email या password गलत है।";
-
-    }
-
-    loginBtn.disabled = false;
-    loginBtn.textContent = "Login as Admin";
-
-  });
+    import {
+      collection,
+      addDoc,
+      getDocs,
+      getDoc,
+      doc,
+      deleteDoc,
+      serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
 
-  // ==============================
-  // CHECK ADMIN ROLE
-  // ==============================
+    // =========================
+    // ELEMENTS
+    // =========================
 
-  onAuthStateChanged(auth, async (user) => {
+    const loginScreen =
+      document.getElementById("loginScreen");
 
-    if(!user){
+    const adminPanel =
+      document.getElementById("adminPanel");
 
-      loginScreen.style.display = "block";
-      adminPanel.style.display = "none";
+    const emailInput =
+      document.getElementById("email");
 
-      return;
-    }
+    const passwordInput =
+      document.getElementById("password");
+
+    const loginBtn =
+      document.getElementById("loginBtn");
+
+    const logoutBtn =
+      document.getElementById("logoutBtn");
+
+    const loginError =
+      document.getElementById("loginError");
+
+    const adminEmail =
+      document.getElementById("adminEmail");
 
 
-    try{
+    // =========================
+    // LOGIN
+    // =========================
 
-      const adminRef = doc(
-        db,
-        "admins",
-        user.uid
-      );
+    loginBtn.addEventListener(
+      "click",
+      async () => {
 
-      const adminSnap = await getDoc(adminRef);
+        const email =
+          emailInput.value.trim();
+
+        const password =
+          passwordInput.value;
+
+        loginError.textContent = "";
 
 
-      // ADMIN DOCUMENT NOT FOUND
-      if(!adminSnap.exists()){
+        if(!email || !password){
 
-        alert(
-          "Access Denied: यह account Admin नहीं है।"
-        );
+          loginError.textContent =
+            "Email और password डालें।";
+
+          return;
+        }
+
+
+        loginBtn.disabled = true;
+        loginBtn.textContent =
+          "Checking...";
+
+
+        try{
+
+          await signInWithEmailAndPassword(
+            auth,
+            email,
+            password
+          );
+
+        }catch(error){
+
+          console.error(error);
+
+          loginError.textContent =
+            "Login failed. Email या password गलत है।";
+
+        }
+
+
+        loginBtn.disabled = false;
+
+        loginBtn.textContent =
+          "Login as Admin";
+
+      }
+    );
+
+
+    // =========================
+    // AUTH + ADMIN CHECK
+    // =========================
+
+    onAuthStateChanged(
+      auth,
+      async (user) => {
+
+        if(!user){
+
+          loginScreen.style.display =
+            "block";
+
+          adminPanel.style.display =
+            "none";
+
+          return;
+        }
+
+
+        try{
+
+          const adminRef =
+            doc(
+              db,
+              "admins",
+              user.uid
+            );
+
+
+          const adminSnap =
+            await getDoc(adminRef);
+
+
+          if(!adminSnap.exists()){
+
+            alert(
+              "Access Denied: यह account Admin नहीं है।"
+            );
+
+            await signOut(auth);
+
+            return;
+          }
+
+
+          const adminData =
+            adminSnap.data();
+
+
+          if(
+            adminData.role !== "admin"
+          ){
+
+            alert(
+              "Access Denied: Admin permission नहीं है।"
+            );
+
+            await signOut(auth);
+
+            return;
+          }
+
+
+          loginScreen.style.display =
+            "none";
+
+          adminPanel.style.display =
+            "block";
+
+
+          adminEmail.textContent =
+            "Logged in as: " +
+            user.email;
+
+
+          await loadBoards();
+
+          await updateStats();
+
+
+        }catch(error){
+
+          console.error(
+            "Admin verification error:",
+            error
+          );
+
+          alert(
+            "Admin verification failed."
+          );
+
+          await signOut(auth);
+
+        }
+
+      }
+    );
+
+
+    // =========================
+    // LOGOUT
+    // =========================
+
+    logoutBtn.addEventListener(
+      "click",
+      async () => {
 
         await signOut(auth);
+
+      }
+    );
+
+
+    // =====================================================
+    // CURRICULUM
+    // =====================================================
+
+
+    let boards = [];
+
+
+    // =========================
+    // LOAD BOARDS
+    // =========================
+
+    async function loadBoards(){
+
+      const snap =
+        await getDocs(
+          collection(
+            db,
+            "boards"
+          )
+        );
+
+
+      boards = [];
+
+
+      snap.forEach(
+        (item) => {
+
+          boards.push({
+
+            id:item.id,
+
+            ...item.data()
+
+          });
+
+        }
+      );
+
+
+      fillBoardSelects();
+
+      await loadCurriculumList();
+
+    }
+
+
+    // =========================
+    // BOARD SELECTS
+    // =========================
+
+    function fillBoardSelects(){
+
+      const selects = [
+
+        "classBoard",
+        "subjectBoard",
+        "chapterBoard",
+        "topicBoard"
+
+      ];
+
+
+      selects.forEach(
+        (id) => {
+
+          const select =
+            document.getElementById(id);
+
+
+          select.innerHTML =
+            '<option value="">Board चुनें</option>';
+
+
+          boards.forEach(
+            (board) => {
+
+              const option =
+                document.createElement(
+                  "option"
+                );
+
+
+              option.value =
+                board.id;
+
+              option.textContent =
+                board.name;
+
+
+              select.appendChild(
+                option
+              );
+
+            }
+          );
+
+        }
+      );
+
+    }
+
+
+    // =========================
+    // ADD BOARD
+    // =========================
+
+    document
+      .getElementById("addBoardBtn")
+      .addEventListener(
+        "click",
+        async () => {
+
+          const name =
+            document
+              .getElementById("boardName")
+              .value
+              .trim();
+
+
+          const code =
+            document
+              .getElementById("boardCode")
+              .value
+              .trim();
+
+
+          if(!name){
+
+            alert(
+              "Board का नाम डालें।"
+            );
+
+            return;
+          }
+
+
+          try{
+
+            await addDoc(
+              collection(
+                db,
+                "boards"
+              ),
+              {
+
+                name:name,
+
+                code:code || "",
+
+                createdAt:
+                  serverTimestamp()
+
+              }
+            );
+
+
+            document
+              .getElementById("boardName")
+              .value = "";
+
+
+            document
+              .getElementById("boardCode")
+              .value = "";
+
+
+            alert(
+              "Board successfully added."
+            );
+
+
+            await loadBoards();
+
+            await updateStats();
+
+
+          }catch(error){
+
+            console.error(error);
+
+            alert(
+              "Board save नहीं हुआ।"
+            );
+
+          }
+
+        }
+      );
+
+
+    // =========================
+    // BOARD CHANGE
+    // =========================
+
+    document
+      .getElementById("subjectBoard")
+      .addEventListener(
+        "change",
+        async (e) => {
+
+          await loadClasses(
+            e.target.value,
+            "subjectClass"
+          );
+
+        }
+      );
+
+
+    document
+      .getElementById("chapterBoard")
+      .addEventListener(
+        "change",
+        async (e) => {
+
+          await loadClasses(
+            e.target.value,
+            "chapterClass"
+          );
+
+        }
+      );
+
+
+    document
+      .getElementById("topicBoard")
+      .addEventListener(
+        "change",
+        async (e) => {
+
+          await loadClasses(
+            e.target.value,
+            "topicClass"
+          );
+
+        }
+      );
+
+
+    document
+      .getElementById("classBoard")
+      .addEventListener(
+        "change",
+        async (e) => {
+
+          document
+            .getElementById("currentPath")
+            .textContent =
+              getBoardName(e.target.value);
+
+        }
+      );
+
+
+    // =========================
+    // LOAD CLASSES
+    // =========================
+
+    async function loadClasses(
+      boardId,
+      selectId
+    ){
+
+      const select =
+        document.getElementById(
+          selectId
+        );
+
+
+      select.innerHTML =
+        '<option value="">Class चुनें</option>';
+
+
+      if(!boardId){
 
         return;
       }
 
 
-      const adminData = adminSnap.data();
-
-
-      // ROLE CHECK
-      if(adminData.role !== "admin"){
-
-        alert(
-          "Access Denied: Admin permission नहीं है।"
+      const snap =
+        await getDocs(
+          collection(
+            db,
+            "boards",
+            boardId,
+            "classes"
+          )
         );
 
-        await signOut(auth);
+
+      snap.forEach(
+        (item) => {
+
+          const data =
+            item.data();
+
+
+          const option =
+            document.createElement(
+              "option"
+            );
+
+
+          option.value =
+            item.id;
+
+
+          option.textContent =
+            data.name;
+
+
+          select.appendChild(
+            option
+          );
+
+        }
+      );
+
+    }
+
+
+    // =========================
+    // ADD CLASS
+    // =========================
+
+    document
+      .getElementById("addClassBtn")
+      .addEventListener(
+        "click",
+        async () => {
+
+          const boardId =
+            document
+              .getElementById("classBoard")
+              .value;
+
+
+          const name =
+            document
+              .getElementById("className")
+              .value
+              .trim();
+
+
+          if(!boardId){
+
+            alert(
+              "पहले Board चुनें।"
+            );
+
+            return;
+          }
+
+
+          if(!name){
+
+            alert(
+              "Class का नाम डालें।"
+            );
+
+            return;
+          }
+
+
+          try{
+
+            await addDoc(
+              collection(
+                db,
+                "boards",
+                boardId,
+                "classes"
+              ),
+              {
+
+                name:name,
+
+                createdAt:
+                  serverTimestamp()
+
+              }
+            );
+
+
+            document
+              .getElementById("className")
+              .value = "";
+
+
+            alert(
+              "Class successfully added."
+            );
+
+
+            await loadClasses(
+              boardId,
+              "classBoard"
+            );
+
+
+            await updateStats();
+
+
+            await loadCurriculumList();
+
+
+          }catch(error){
+
+            console.error(error);
+
+            alert(
+              "Class save नहीं हुई।"
+            );
+
+          }
+
+        }
+      );
+
+
+    // =========================
+    // SUBJECT BOARD → CLASS
+    // =========================
+
+    document
+      .getElementById("subjectClass")
+      .addEventListener(
+        "change",
+        async (e) => {
+
+          const boardId =
+            document
+              .getElementById("subjectBoard")
+              .value;
+
+
+          const classId =
+            e.target.value;
+
+
+          if(
+            boardId &&
+            classId
+          ){
+
+            updatePath(
+              boardId,
+              classId,
+              "",
+              "",
+              ""
+            );
+
+          }
+
+        }
+      );
+
+
+    // =========================
+    // ADD SUBJECT
+    // =========================
+
+    document
+      .getElementById("addSubjectBtn")
+      .addEventListener(
+        "click",
+        async () => {
+
+          const boardId =
+            document
+              .getElementById("subjectBoard")
+              .value;
+
+
+          const classId =
+            document
+              .getElementById("subjectClass")
+              .value;
+
+
+          const name =
+            document
+              .getElementById("subjectName")
+              .value
+              .trim();
+
+
+          const stream =
+            document
+              .getElementById("subjectStream")
+              .value
+              .trim();
+
+
+          if(
+            !boardId ||
+            !classId
+          ){
+
+            alert(
+              "Board और Class चुनें।"
+            );
+
+            return;
+          }
+
+
+          if(!name){
+
+            alert(
+              "Subject का नाम डालें।"
+            );
+
+            return;
+          }
+
+
+          try{
+
+            await addDoc(
+              collection(
+                db,
+                "boards",
+                boardId,
+                "classes",
+                classId,
+                "subjects"
+              ),
+              {
+
+                name:name,
+
+                stream:
+                  stream || "General",
+
+                createdAt:
+                  serverTimestamp()
+
+              }
+            );
+
+
+            document
+              .getElementById("subjectName")
+              .value = "";
+
+
+            document
+              .getElementById("subjectStream")
+              .value = "";
+
+
+            alert(
+              "Subject successfully added."
+            );
+
+
+            await updateStats();
+
+            await loadCurriculumList();
+
+
+          }catch(error){
+
+            console.error(error);
+
+            alert(
+              "Subject save नहीं हुआ।"
+            );
+
+          }
+
+        }
+      );
+
+
+    // =========================
+    // CHAPTER CLASS CHANGE
+    // =========================
+
+    document
+      .getElementById("chapterClass")
+      .addEventListener(
+        "change",
+        async (e) => {
+
+          const boardId =
+            document
+              .getElementById("chapterBoard")
+              .value;
+
+
+          const classId =
+            e.target.value;
+
+
+          await loadSubjects(
+            boardId,
+            classId,
+            "chapterSubject"
+          );
+
+        }
+      );
+
+
+    // =========================
+    // TOPIC CLASS CHANGE
+    // =========================
+
+    document
+      .getElementById("topicClass")
+      .addEventListener(
+        "change",
+        async (e) => {
+
+          const boardId =
+            document
+              .getElementById("topicBoard")
+              .value;
+
+
+          const classId =
+            e.target.value;
+
+
+          await loadSubjects(
+            boardId,
+            classId,
+            "topicSubject"
+          );
+
+        }
+      );
+
+
+    // =========================
+    // LOAD SUBJECTS
+    // =========================
+
+    async function loadSubjects(
+      boardId,
+      classId,
+      selectId
+    ){
+
+      const select =
+        document.getElementById(
+          selectId
+        );
+
+
+      select.innerHTML =
+        '<option value="">Subject चुनें</option>';
+
+
+      if(
+        !boardId ||
+        !classId
+      ){
 
         return;
       }
 
 
-      // ==============================
-      // ADMIN VERIFIED
-      // ==============================
+      const snap =
+        await getDocs(
+          collection(
+            db,
+            "boards",
+            boardId,
+            "classes",
+            classId,
+            "subjects"
+          )
+        );
 
-      loginScreen.style.display = "none";
-      adminPanel.style.display = "block";
 
-      adminEmail.textContent =
-        "Logged in as: " + user.email;
+      snap.forEach(
+        (item) => {
 
-      console.log(
-        "ADMIN VERIFIED:",
-        user.uid
+          const data =
+            item.data();
+
+
+          const option =
+            document.createElement(
+              "option"
+            );
+
+
+          option.value =
+            item.id;
+
+
+          option.textContent =
+            data.stream &&
+            data.stream !== "General"
+
+              ? data.name +
+                " — " +
+                data.stream
+
+              : data.name;
+
+
+          select.appendChild(
+            option
+          );
+
+        }
+      );
+
+    }
+
+
+    // =========================
+    // CHAPTER SUBJECT CHANGE
+    // =========================
+
+    document
+      .getElementById("chapterSubject")
+      .addEventListener(
+        "change",
+        (e) => {
+
+          updatePath(
+
+            document
+              .getElementById("chapterBoard")
+              .value,
+
+            document
+              .getElementById("chapterClass")
+              .value,
+
+            e.target.value,
+
+            "",
+
+            ""
+
+          );
+
+        }
       );
 
 
-    }catch(error){
+    // =========================
+    // TOPIC SUBJECT CHANGE
+    // =========================
 
-      console.error(
-        "Admin verification error:",
-        error
+    document
+      .getElementById("topicSubject")
+      .addEventListener(
+        "change",
+        async (e) => {
+
+          const boardId =
+            document
+              .getElementById("topicBoard")
+              .value;
+
+
+          const classId =
+            document
+              .getElementById("topicClass")
+              .value;
+
+
+          const subjectId =
+            e.target.value;
+
+
+          await loadChapters(
+            boardId,
+            classId,
+            subjectId,
+            "topicChapter"
+          );
+
+        }
       );
+
+
+    // =========================
+    // LOAD CHAPTERS
+    // =========================
+
+    async function loadChapters(
+      boardId,
+      classId,
+      subjectId,
+      selectId
+    ){
+
+      const select =
+        document.getElementById(
+          selectId
+        );
+
+
+      select.innerHTML =
+        '<option value="">Chapter चुनें</option>';
+
+
+      if(
+        !boardId ||
+        !classId ||
+        !subjectId
+      ){
+
+        return;
+      }
+
+
+      const snap =
+        await getDocs(
+          collection(
+            db,
+            "boards",
+            boardId,
+            "classes",
+            classId,
+            "subjects",
+            subjectId,
+            "chapters"
+          )
+        );
+
+
+      snap.forEach(
+        (item) => {
+
+          const option =
+            document.createElement(
+              "option"
+            );
+
+
+          option.value =
+            item.id;
+
+
+          option.textContent =
+            item.data().name;
+
+
+          select.appendChild(
+            option
+          );
+
+        }
+      );
+
+    }
+
+
+    // =========================
+    // ADD CHAPTER
+    // =========================
+
+    document
+      .getElementById("addChapterBtn")
+      .addEventListener(
+        "click",
+        async () => {
+
+          const boardId =
+            document
+              .getElementById("chapterBoard")
+              .value;
+
+
+          const classId =
+            document
+              .getElementById("chapterClass")
+              .value;
+
+
+          const subjectId =
+            document
+              .getElementById("chapterSubject")
+              .value;
+
+
+          const name =
+            document
+              .getElementById("chapterName")
+              .value
+              .trim();
+
+
+          if(
+            !boardId ||
+            !classId ||
+            !subjectId
+          ){
+
+            alert(
+              "Board, Class और Subject चुनें।"
+            );
+
+            return;
+          }
+
+
+          if(!name){
+
+            alert(
+              "Chapter का नाम डालें।"
+            );
+
+            return;
+          }
+
+
+          try{
+
+            await addDoc(
+              collection(
+                db,
+                "boards",
+                boardId,
+                "classes",
+                classId,
+                "subjects",
+                subjectId,
+                "chapters"
+              ),
+              {
+
+                name:name,
+
+                createdAt:
+                  serverTimestamp()
+
+              }
+            );
+
+
+            document
+              .getElementById("chapterName")
+              .value = "";
+
+
+            alert(
+              "Chapter successfully added."
+            );
+
+
+            await updateStats();
+
+            await loadChapters(
+              boardId,
+              classId,
+              subjectId,
+              "topicChapter"
+            );
+
+            await loadCurriculumList();
+
+
+          }catch(error){
+
+            console.error(error);
+
+            alert(
+              "Chapter save नहीं हुआ।"
+            );
+
+          }
+
+        }
+      );
+
+
+    // =========================
+    // TOPIC CHAPTER CHANGE
+    // =========================
+
+    document
+      .getElementById("topicChapter")
+      .addEventListener(
+        "change",
+        (e) => {
+
+          updatePath(
+
+            document
+              .getElementById("topicBoard")
+              .value,
+
+            document
+              .getElementById("topicClass")
+              .value,
+
+            document
+              .getElementById("topicSubject")
+              .value,
+
+            e.target.value,
+
+            ""
+
+          );
+
+        }
+      );
+
+
+    // =========================
+    // ADD TOPIC
+    // =========================
+
+    document
+      .getElementById("addTopicBtn")
+      .addEventListener(
+        "click",
+        async () => {
+
+          const boardId =
+            document
+              .getElementById("topicBoard")
+              .value;
+
+
+          const classId =
+            document
+              .getElementById("topicClass")
+              .value;
+
+
+          const subjectId =
+            document
+              .getElementById("topicSubject")
+              .value;
+
+
+          const chapterId =
+            document
+              .getElementById("topicChapter")
+              .value;
+
+
+          const name =
+            document
+              .getElementById("topicName")
+              .value
+              .trim();
+
+
+          if(
+            !boardId ||
+            !classId ||
+            !subjectId ||
+            !chapterId
+          ){
+
+            alert(
+              "Board, Class, Subject और Chapter चुनें।"
+            );
+
+            return;
+          }
+
+
+          if(!name){
+
+            alert(
+              "Topic का नाम डालें।"
+            );
+
+            return;
+          }
+
+
+          try{
+
+            await addDoc(
+              collection(
+                db,
+                "boards",
+                boardId,
+                "classes",
+                classId,
+                "subjects",
+                subjectId,
+                "chapters",
+                chapterId,
+                "topics"
+              ),
+              {
+
+                name:name,
+
+                createdAt:
+                  serverTimestamp()
+
+              }
+            );
+
+
+            document
+              .getElementById("topicName")
+              .value = "";
+
+
+            alert(
+              "Topic successfully added."
+            );
+
+
+            await loadCurriculumList();
+
+
+          }catch(error){
+
+            console.error(error);
+
+            alert(
+              "Topic save नहीं हुआ।"
+            );
+
+          }
+
+        }
+      );
+
+
+    // =========================
+    // PATH
+    // =========================
+
+    function updatePath(
+      boardId,
+      classId,
+      subjectId,
+      chapterId,
+      topicId
+    ){
+
+      const board =
+        getBoardName(boardId);
+
+
+      let text =
+        board || "Board";
+
+
+      if(classId){
+
+        text +=
+          " → Class";
+
+      }
+
+
+      if(subjectId){
+
+        text +=
+          " → Subject";
+
+      }
+
+
+      if(chapterId){
+
+        text +=
+          " → Chapter";
+
+      }
+
+
+      if(topicId){
+
+        text +=
+          " → Topic";
+
+      }
+
+
+      document
+        .getElementById("currentPath")
+        .textContent =
+          text;
+
+    }
+
+
+    function getBoardName(
+      boardId
+    ){
+
+      const board =
+        boards.find(
+          item =>
+            item.id === boardId
+        );
+
+
+      return board
+        ? board.name
+        : "";
+
+    }
+
+
+    // =========================
+    // CURRICULUM LIST
+    // =========================
+
+    async function loadCurriculumList(){
+
+      const list =
+        document
+          .getElementById(
+            "curriculumList"
+          );
+
+
+      list.innerHTML =
+        '<div class="empty">Curriculum load हो रहा है...</div>';
+
+
+      if(!boards.length){
+
+        list.innerHTML =
+          '<div class="empty">अभी कोई Board नहीं है।</div>';
+
+        return;
+      }
+
+
+      let html = "";
+
+
+      for(
+        const board of boards
+      ){
+
+        html += `
+          <div class="item">
+            <div>
+              <div class="item-name">
+                🏫 ${escapeHtml(board.name)}
+              </div>
+              <div class="item-meta">
+                ${escapeHtml(board.code || "")}
+              </div>
+            </div>
+
+            <button
+              class="delete-btn"
+              data-delete-board="${board.id}"
+            >
+              Delete
+            </button>
+          </div>
+        `;
+
+
+        const classesSnap =
+          await getDocs(
+            collection(
+              db,
+              "boards",
+              board.id,
+              "classes"
+            )
+          );
+
+
+        for(
+          const classDoc of classesSnap.docs
+        ){
+
+          const classData =
+            classDoc.data();
+
+
+          html += `
+            <div
+              class="item"
+              style="margin-left:12px"
+            >
+              <div>
+                <div class="item-name">
+                  🎓 ${escapeHtml(classData.name)}
+                </div>
+
+                <div class="item-meta">
+                  ${escapeHtml(board.name)}
+                </div>
+              </div>
+
+              <button
+                class="delete-btn"
+                data-delete-class-board="${board.id}"
+                data-delete-class="${classDoc.id}"
+              >
+                Delete
+              </button>
+            </div>
+          `;
+
+
+          const subjectsSnap =
+            await getDocs(
+              collection(
+                db,
+                "boards",
+                board.id,
+                "classes",
+                classDoc.id,
+                "subjects"
+              )
+            );
+
+
+          for(
+            const subjectDoc
+            of subjectsSnap.docs
+          ){
+
+            const subjectData =
+              subjectDoc.data();
+
+
+            html += `
+              <div
+                class="item"
+                style="margin-left:24px"
+              >
+                <div>
+                  <div class="item-name">
+                    📚 ${escapeHtml(subjectData.name)}
+                  </div>
+
+                  <div class="item-meta">
+                    ${escapeHtml(subjectData.stream || "General")}
+                  </div>
+                </div>
+
+                <button
+                  class="delete-btn"
+                  data-delete-subject-board="${board.id}"
+                  data-delete-subject-class="${classDoc.id}"
+                  data-delete-subject="${subjectDoc.id}"
+                >
+                  Delete
+                </button>
+              </div>
+            `;
+
+
+            const chaptersSnap =
+              await getDocs(
+                collection(
+                  db,
+                  "boards",
+                  board.id,
+                  "classes",
+                  classDoc.id,
+                  "subjects",
+                  subjectDoc.id,
+                  "chapters"
+                )
+              );
+
+
+            for(
+              const chapterDoc
+              of chaptersSnap.docs
+            ){
+
+              const chapterData =
+                chapterDoc.data();
+
+
+              html += `
+                <div
+                  class="item"
+                  style="margin-left:36px"
+                >
+                  <div>
+                    <div class="item-name">
+                      📖 ${escapeHtml(chapterData.name)}
+                    </div>
+                  </div>
+
+                  <button
+                    class="delete-btn"
+                    data-delete-chapter-board="${board.id}"
+                    data-delete-chapter-class="${classDoc.id}"
+                    data-delete-chapter-subject="${subjectDoc.id}"
+                    data-delete-chapter="${chapterDoc.id}"
+                  >
+                    Delete
+                  </button>
+                </div>
+              `;
+
+
+              const topicsSnap =
+                await getDocs(
+                  collection(
+                    db,
+                    "boards",
+                    board.id,
+                    "classes",
+                    classDoc.id,
+                    "subjects",
+                    subjectDoc.id,
+                    "chapters",
+                    chapterDoc.id,
+                    "topics"
+                  )
+                );
+
+
+              for(
+                const topicDoc
+                of topicsSnap.docs
+              ){
+
+                const topicData =
+                  topicDoc.data();
+
+
+                html += `
+                  <div
+                    class="item"
+                    style="margin-left:48px"
+                  >
+                    <div>
+                      <div class="item-name">
+                        📝 ${escapeHtml(topicData.name)}
+                      </div>
+                    </div>
+
+                    <button
+                      class="delete-btn"
+                      data-delete-topic-board="${board.id}"
+                      data-delete-topic-class="${classDoc.id}"
+                      data-delete-topic-subject="${subjectDoc.id}"
+                      data-delete-topic-chapter="${chapterDoc.id}"
+                      data-delete-topic="${topicDoc.id}"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                `;
+
+              }
+
+            }
+
+          }
+
+        }
+
+      }
+
+
+      list.innerHTML =
+        html ||
+        '<div class="empty">अभी कोई curriculum नहीं है।</div>';
+
+
+      // DELETE BUTTONS
+
+      list
+        .querySelectorAll(
+          "[data-delete-board]"
+        )
+        .forEach(
+          btn => {
+
+            btn.addEventListener(
+              "click",
+              () =>
+                deleteBoard(
+                  btn.dataset.deleteBoard
+                )
+            );
+
+          }
+        );
+
+
+      list
+        .querySelectorAll(
+          "[data-delete-class]"
+        )
+        .forEach(
+          btn => {
+
+            btn.addEventListener(
+              "click",
+              () =>
+                deleteClass(
+                  btn.dataset.deleteClassBoard,
+                  btn.dataset.deleteClass
+                )
+            );
+
+          }
+        );
+
+
+      list
+        .querySelectorAll(
+          "[data-delete-subject]"
+        )
+        .forEach(
+          btn => {
+
+            btn.addEventListener(
+              "click",
+              () =>
+                deleteSubject(
+                  btn.dataset.deleteSubjectBoard,
+                  btn.dataset.deleteSubjectClass,
+                  btn.dataset.deleteSubject
+                )
+            );
+
+          }
+        );
+
+
+      list
+        .querySelectorAll(
+          "[data-delete-chapter]"
+        )
+        .forEach(
+          btn => {
+
+            btn.addEventListener(
+              "click",
+              () =>
+                deleteChapter(
+                  btn.dataset.deleteChapterBoard,
+                  btn.dataset.deleteChapterClass,
+                  btn.dataset.deleteChapterSubject,
+                  btn.dataset.deleteChapter
+                )
+            );
+
+          }
+        );
+
+
+      list
+        .querySelectorAll(
+          "[data-delete-topic]"
+        )
+        .forEach(
+          btn => {
+
+            btn.addEventListener(
+              "click",
+              () =>
+                deleteTopic(
+                  btn.dataset.deleteTopicBoard,
+                  btn.dataset.deleteTopicClass,
+                  btn.dataset.deleteTopicSubject,
+                  btn.dataset.deleteTopicChapter,
+                  btn.dataset.deleteTopic
+                )
+            );
+
+          }
+        );
+
+    }
+
+
+    // =========================
+    // DELETE BOARD
+    // =========================
+
+    async function deleteBoard(
+      boardId
+    ){
+
+      if(
+        !confirm(
+          "क्या यह Board delete करना है?"
+        )
+      ){
+
+        return;
+      }
+
+
+      await deleteDoc(
+        doc(
+          db,
+          "boards",
+          boardId
+        )
+      );
+
 
       alert(
-        "Admin verification failed."
+        "Board deleted."
       );
 
-      await signOut(auth);
+
+      await loadBoards();
+
+      await updateStats();
+
     }
 
-  });
+
+    // =========================
+    // DELETE CLASS
+    // =========================
+
+    async function deleteClass(
+      boardId,
+      classId
+    ){
+
+      if(
+        !confirm(
+          "क्या यह Class delete करना है?"
+        )
+      ){
+
+        return;
+      }
 
 
-  // ==============================
-  // LOGOUT
-  // ==============================
+      await deleteDoc(
+        doc(
+          db,
+          "boards",
+          boardId,
+          "classes",
+          classId
+        )
+      );
 
-  logoutBtn.addEventListener("click", async () => {
 
-    await signOut(auth);
+      alert(
+        "Class deleted."
+      );
 
-  });
 
-</script>
+      await loadCurriculumList();
+
+      await updateStats();
+
+    }
+
+
+    // =========================
+    // DELETE SUBJECT
+    // =========================
+
+    async function deleteSubject(
+      boardId,
+      classId,
+      subjectId
+    ){
+
+      if(
+        !confirm(
+          "क्या यह Subject delete करना है?"
+        )
+      ){
+
+        return;
+      }
+
+
+      await deleteDoc(
+        doc(
+          db,
+          "boards",
+          boardId,
+          "classes",
+          classId,
+          "subjects",
+          subjectId
+        )
+      );
+
+
+      alert(
+        "Subject deleted."
+      );
+
+
+      await loadCurriculumList();
+
+      await updateStats();
+
+    }
+
+
+    // =========================
+    // DELETE CHAPTER
+    // =========================
+
+    async function deleteChapter(
+      boardId,
+      classId,
+      subjectId,
+      chapterId
+    ){
+
+      if(
+        !confirm(
+          "क्या यह Chapter delete करना है?"
+        )
+      ){
+
+        return;
+      }
+
+
+      await deleteDoc(
+        doc(
+          db,
+          "boards",
+          boardId,
+          "classes",
+          classId,
+          "subjects",
+          subjectId,
+          "chapters",
+          chapterId
+        )
+      );
+
+
+      alert(
+        "Chapter deleted."
+      );
+
+
+      await loadCurriculumList();
+
+      await updateStats();
+
+    }
+
+
+    // =========================
+    // DELETE TOPIC
+    // =========================
+
+    async function deleteTopic(
+      boardId,
+      classId,
+      subjectId,
+      chapterId,
+      topicId
+    ){
+
+      if(
+        !confirm(
+          "क्या यह Topic delete करना है?"
+        )
+      ){
+
+        return;
+      }
+
+
+      await deleteDoc(
+        doc(
+          db,
+          "boards",
+          boardId,
+          "classes",
+          classId,
+          "subjects",
+          subjectId,
+          "chapters",
+          chapterId,
+          "topics",
+          topicId
+        )
+      );
+
+
+      alert(
+        "Topic deleted."
+      );
+
+
+      await loadCurriculumList();
+
+    }
+
+
+    // =========================
+    // STATS
+    // =========================
+
+    async function updateStats(){
+
+      try{
+
+        const boardSnap =
+          await getDocs(
+            collection(
+              db,
+              "boards"
+            )
+          );
+
+
+        let classTotal = 0;
+        let subjectTotal = 0;
+        let chapterTotal = 0;
+
+
+        for(
+          const board of boardSnap.docs
+        ){
+
+          const classSnap =
+            await getDocs(
+              collection(
+                db,
+                "boards",
+                board.id,
+                "classes"
+              )
+            );
+
+
+          classTotal +=
+            classSnap.size;
+
+
+          for(
+            const classDoc
+            of classSnap.docs
+          ){
+
+            const subjectSnap =
+              await getDocs(
+                collection(
+                  db,
+                  "boards",
+                  board.id,
+                  "classes",
+                  classDoc.id,
+                  "subjects"
+                )
+              );
+
+
+            subjectTotal +=
+              subjectSnap.size;
+
+
+            for(
+              const subjectDoc
+              of subjectSnap.docs
+            ){
+
+              const chapterSnap =
+                await getDocs(
+                  collection(
+                    db,
+                    "boards",
+                    board.id,
+                    "classes",
+                    classDoc.id,
+                    "subjects",
+                    subjectDoc.id,
+                    "chapters"
+                  )
+                );
+
+
+              chapterTotal +=
+                chapterSnap.size;
+
+            }
+
+          }
+
+        }
+
+
+        document
+          .getElementById(
+            "boardCount"
+          )
+          .textContent =
+            boardSnap.size;
+
+
+        document
+          .getElementById(
+            "classCount"
+          )
+          .textContent =
+            classTotal;
+
+
+        document
+          .getElementById(
+            "subjectCount"
+          )
+          .textContent =
+            subjectTotal;
+
+
+        document
+          .getElementById(
+            "chapterCount"
+          )
+          .textContent =
+            chapterTotal;
+
+
+      }catch(error){
+
+        console.error(
+          "Stats error:",
+          error
+        );
+
+      }
+
+    }
+
+
+    // =========================
+    // ANNOUNCEMENT
+    // =========================
+
+    document
+      .getElementById(
+        "announcementBtn"
+      )
+      .addEventListener(
+        "click",
+        async () => {
+
+          const title =
+            document
+              .getElementById(
+                "announcementTitle"
+              )
+              .value
+              .trim();
+
+
+          const text =
+            document
+              .getElementById(
+                "announcementText"
+              )
+              .value
+              .trim();
+
+
+          if(
+            !title ||
+            !text
+          ){
+
+            alert(
+              "Title और message दोनों डालें।"
+            );
+
+            return;
+          }
+
+
+          try{
+
+            await addDoc(
+              collection(
+                db,
+                "announcements"
+              ),
+              {
+
+                title:title,
+
+                text:text,
+
+                createdAt:
+                  serverTimestamp()
+
+              }
+            );
+
+
+            document
+              .getElementById(
+                "announcementTitle"
+              )
+              .value = "";
+
+
+            document
+              .getElementById(
+                "announcementText"
+              )
+              .value = "";
+
+
+            alert(
+              "Announcement published."
+            );
+
+
+          }catch(error){
+
+            console.error(error);
+
+            alert(
+              "Announcement save नहीं हुआ।"
+            );
+
+          }
+
+        }
+      );
+
+
+    // =========================
+    // ESCAPE HTML
+    // =========================
+
+    function escapeHtml(
+      value
+    ){
+
+      return String(value || "")
+        .replace(
+          /&/g,
+          "&amp;"
+        )
+        .replace(
+          /</g,
+          "&lt;"
+        )
+        .replace(
+          />/g,
+          "&gt;"
+        )
+        .replace(
+          /"/g,
+          "&quot;"
+        )
+        .replace(
+          /'/g,
+          "&#039;"
+        );
+
+    }
+
+  </script>
 
 </body>
 </html>
