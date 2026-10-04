@@ -7,316 +7,390 @@
   <title>EXAMOS AI — Admin Panel</title>
 
   <style>
-    *{
-      box-sizing:border-box;
-      margin:0;
-      padding:0;
-      font-family:Arial,sans-serif;
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
     }
 
-    body{
-      background:#090b18;
-      color:white;
-      min-height:100vh;
+    body {
+      background: #090b18;
+      color: white;
+      min-height: 100vh;
     }
 
-    button{
-      border:0;
-      cursor:pointer;
+    button {
+      border: none;
+      cursor: pointer;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* LOGIN */
+
+    #loginPage {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .login-box {
+      width: 100%;
+      max-width: 400px;
+      background: #171b35;
+      border: 1px solid #292f55;
+      border-radius: 20px;
+      padding: 28px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.35);
+    }
+
+    .logo {
+      text-align: center;
+      font-size: 30px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      background: linear-gradient(90deg,#8b5cf6,#4f7cff);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #9da4c7;
+      margin-bottom: 25px;
     }
 
     input,
-    select{
-      width:100%;
-      padding:13px;
-      margin:7px 0;
-      border:1px solid #343957;
-      border-radius:10px;
-      background:#0e1122;
-      color:white;
-      outline:none;
+    select {
+      width: 100%;
+      padding: 14px;
+      margin-bottom: 12px;
+      border-radius: 12px;
+      border: 1px solid #343b68;
+      background: #0f1225;
+      color: white;
+      outline: none;
     }
 
-    select option{
-      background:#171b35;
-      color:white;
+    input:focus,
+    select:focus {
+      border-color: #8b5cf6;
     }
 
-    .login-box{
-      width:92%;
-      max-width:400px;
-      margin:100px auto;
-      background:#171b35;
-      padding:25px;
-      border-radius:18px;
-      box-shadow:0 10px 35px #0008;
+    .primary-btn {
+      width: 100%;
+      padding: 14px;
+      border-radius: 12px;
+      background: linear-gradient(90deg,#8b5cf6,#4f7cff);
+      color: white;
+      font-size: 16px;
+      font-weight: 700;
     }
 
-    .login-box h1{
-      text-align:center;
-      margin-bottom:8px;
+    .error {
+      color: #ff6b81;
+      text-align: center;
+      margin-top: 12px;
+      font-size: 14px;
     }
 
-    .sub{
-      text-align:center;
-      color:#aaa;
-      margin-bottom:25px;
+    /* ADMIN */
+
+    #adminPage {
+      min-height: 100vh;
     }
 
-    .primary{
-      width:100%;
-      padding:14px;
-      margin-top:10px;
-      border-radius:10px;
-      background:#8b5cf6;
-      color:white;
-      font-size:16px;
-      font-weight:bold;
+    .topbar {
+      height: 70px;
+      padding: 0 18px;
+      background: #11142a;
+      border-bottom: 1px solid #292f55;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 20;
     }
 
-    .primary:hover{
-      opacity:.9;
+    .top-title {
+      font-size: 20px;
+      font-weight: 700;
     }
 
-    .danger{
-      background:#ef4444 !important;
+    .logout-btn {
+      background: #292f55;
+      color: white;
+      padding: 9px 14px;
+      border-radius: 10px;
     }
 
-    .secondary{
-      background:#282d4b;
-      color:white;
-      padding:10px 14px;
-      border-radius:9px;
+    .container {
+      width: 100%;
+      max-width: 850px;
+      margin: auto;
+      padding: 20px;
     }
 
-    .error{
-      color:#ff6b6b;
-      text-align:center;
-      margin-top:12px;
-      min-height:20px;
+    /* DASHBOARD */
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(2,1fr);
+      gap: 14px;
+      margin-bottom: 25px;
     }
 
-    #adminPanel{
-      display:none;
+    .dashboard-card {
+      background: #171b35;
+      border: 1px solid #292f55;
+      padding: 20px;
+      border-radius: 16px;
     }
 
-    header{
-      background:#171b35;
-      padding:15px;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      position:sticky;
-      top:0;
-      z-index:20;
-      border-bottom:1px solid #292e4b;
+    .dashboard-card h3 {
+      color: #9da4c7;
+      font-size: 14px;
+      margin-bottom: 8px;
     }
 
-    .logo{
-      font-size:20px;
-      font-weight:bold;
-      color:#a78bfa;
+    .dashboard-card strong {
+      font-size: 27px;
     }
 
-    .logout{
-      width:auto;
-      margin:0;
-      padding:9px 14px;
-      background:#ef4444;
-      color:white;
-      border-radius:9px;
+    /* CURRICULUM */
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 18px;
     }
 
-    .container{
-      width:94%;
-      max-width:1100px;
-      margin:20px auto;
-      padding-bottom:50px;
+    .section-title {
+      font-size: 24px;
+      font-weight: 800;
     }
 
-    .welcome{
-      background:linear-gradient(135deg,#171b35,#22264a);
-      padding:22px;
-      border-radius:16px;
-      margin-bottom:20px;
+    .path {
+      color: #8f97bb;
+      font-size: 13px;
+      margin-top: 5px;
+      line-height: 1.5;
     }
 
-    .welcome p{
-      color:#aaa;
-      margin-top:6px;
+    .add-btn {
+      background: linear-gradient(90deg,#8b5cf6,#4f7cff);
+      color: white;
+      padding: 11px 15px;
+      border-radius: 11px;
+      font-weight: 700;
+      white-space: nowrap;
     }
 
-    .status{
-      color:#4ade80;
-      margin-top:10px;
+    .back-btn {
+      background: #202644;
+      color: white;
+      padding: 10px 14px;
+      border-radius: 10px;
+      margin-bottom: 16px;
     }
 
-    .grid{
-      display:grid;
-      grid-template-columns:repeat(2,1fr);
-      gap:14px;
+    .items {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
 
-    .card{
-      background:#171b35;
-      padding:20px;
-      border-radius:16px;
-      border:1px solid #282d4b;
+    .item {
+      background: #171b35;
+      border: 1px solid #292f55;
+      border-radius: 15px;
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      transition: .2s;
     }
 
-    .card h3{
-      margin-bottom:8px;
+    .item:hover {
+      border-color: #6d5bd0;
     }
 
-    .card p{
-      color:#aaa;
-      font-size:14px;
+    .item-main {
+      min-width: 0;
+      flex: 1;
+      cursor: pointer;
     }
 
-    .number{
-      font-size:28px;
-      font-weight:bold;
-      color:#a78bfa;
-      margin-top:8px;
+    .item-name {
+      font-size: 16px;
+      font-weight: 700;
+      word-break: break-word;
     }
 
-    .section{
-      background:#171b35;
-      padding:20px;
-      border-radius:16px;
-      margin-top:20px;
-      border:1px solid #282d4b;
+    .item-sub {
+      font-size: 12px;
+      color: #8f97bb;
+      margin-top: 5px;
     }
 
-    .section h2{
-      margin-bottom:8px;
+    .arrow {
+      color: #8b5cf6;
+      font-size: 20px;
     }
 
-    .section-desc{
-      color:#aaa;
-      font-size:14px;
-      margin-bottom:18px;
+    .actions {
+      display: flex;
+      gap: 7px;
     }
 
-    .form-grid{
-      display:grid;
-      grid-template-columns:repeat(2,1fr);
-      gap:12px;
+    .small-btn {
+      padding: 8px 10px;
+      border-radius: 8px;
+      color: white;
+      background: #272d50;
+      font-size: 12px;
     }
 
-    .form-box{
-      background:#101329;
-      padding:15px;
-      border-radius:12px;
-      border:1px solid #282d4b;
+    .delete-btn {
+      background: #512638;
     }
 
-    .form-box h3{
-      margin-bottom:8px;
-      font-size:16px;
+    .empty {
+      text-align: center;
+      padding: 45px 20px;
+      background: #11142a;
+      border: 1px dashed #343b68;
+      border-radius: 16px;
+      color: #858cab;
     }
 
-    .item-list{
-      margin-top:15px;
+    .empty strong {
+      display: block;
+      color: white;
+      margin-bottom: 7px;
+      font-size: 17px;
     }
 
-    .item{
-      background:#101329;
-      border:1px solid #282d4b;
-      border-radius:10px;
-      padding:12px;
-      margin-top:8px;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:10px;
+    /* MODAL */
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      z-index: 100;
     }
 
-    .item-name{
-      font-weight:bold;
+    .modal-box {
+      width: 100%;
+      max-width: 430px;
+      background: #171b35;
+      border: 1px solid #343b68;
+      border-radius: 18px;
+      padding: 22px;
     }
 
-    .item-meta{
-      color:#999;
-      font-size:12px;
-      margin-top:3px;
+    .modal-title {
+      font-size: 20px;
+      font-weight: 800;
+      margin-bottom: 18px;
     }
 
-    .delete-btn{
-      background:#ef4444;
-      color:white;
-      padding:8px 10px;
-      border-radius:8px;
-      flex-shrink:0;
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 5px;
     }
 
-    .empty{
-      color:#777;
-      padding:12px 0;
-      font-size:14px;
+    .modal-actions button {
+      flex: 1;
+      padding: 13px;
+      border-radius: 11px;
+      font-weight: 700;
     }
 
-    .path{
-      background:#0b0e1e;
-      border:1px solid #292e4b;
-      padding:12px;
-      border-radius:10px;
-      color:#a78bfa;
-      margin-top:15px;
-      font-size:13px;
-      overflow-wrap:anywhere;
+    .cancel-btn {
+      background: #292f55;
+      color: white;
     }
 
-    .hidden{
-      display:none !important;
+    .save-btn {
+      background: linear-gradient(90deg,#8b5cf6,#4f7cff);
+      color: white;
     }
 
-    .ai-note{
-      border-left:4px solid #8b5cf6;
-      padding:12px;
-      background:#101329;
-      color:#bbb;
-      border-radius:8px;
-      margin-top:12px;
-      line-height:1.5;
+    /* LOADING */
+
+    #loading {
+      position: fixed;
+      inset: 0;
+      background: rgba(9,11,24,.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 200;
+      font-size: 18px;
     }
 
-    @media(max-width:700px){
+    .spinner {
+      width: 30px;
+      height: 30px;
+      border: 3px solid #343b68;
+      border-top-color: #8b5cf6;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-right: 12px;
+    }
 
-      .form-grid{
-        grid-template-columns:1fr;
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* MOBILE */
+
+    @media(max-width:600px) {
+
+      .container {
+        padding: 15px;
       }
 
-      .grid{
-        grid-template-columns:1fr 1fr;
+      .section-title {
+        font-size: 21px;
       }
 
-      .section{
-        padding:15px;
+      .dashboard-grid {
+        grid-template-columns: 1fr 1fr;
       }
 
-      .item{
-        align-items:flex-start;
-      }
-    }
-
-    @media(max-width:430px){
-
-      .grid{
-        grid-template-columns:1fr 1fr;
-        gap:9px;
+      .item {
+        padding: 13px;
       }
 
-      .card{
-        padding:14px;
+      .actions {
+        flex-direction: column;
       }
 
-      .card h3{
-        font-size:14px;
+      .small-btn {
+        padding: 7px 9px;
       }
 
-      .number{
-        font-size:24px;
+      .add-btn {
+        padding: 10px 12px;
+        font-size: 13px;
       }
     }
   </style>
@@ -324,432 +398,213 @@
 
 <body>
 
-  <!-- =========================
-       LOGIN
-  ========================== -->
+  <!-- LOADING -->
 
-  <div id="loginScreen" class="login-box">
-
-    <h1>EXAMOS AI</h1>
-
-    <div class="sub">
-      Secure Admin Panel
-    </div>
-
-    <input
-      type="email"
-      id="email"
-      placeholder="Admin Email"
-      autocomplete="email"
-    >
-
-    <input
-      type="password"
-      id="password"
-      placeholder="Password"
-      autocomplete="current-password"
-    >
-
-    <button class="primary" id="loginBtn">
-      Login as Admin
-    </button>
-
-    <div id="loginError" class="error"></div>
-
+  <div id="loading" class="hidden">
+    <div class="spinner"></div>
+    <span>Loading...</span>
   </div>
 
 
-  <!-- =========================
-       ADMIN PANEL
-  ========================== -->
+  <!-- LOGIN -->
 
-  <div id="adminPanel">
+  <section id="loginPage">
 
-    <header>
+    <div class="login-box">
 
-      <div class="logo">
-        EXAMOS AI
+      <div class="logo">EXAMOS AI</div>
+
+      <div class="subtitle">
+        Admin Panel
       </div>
 
-      <button class="logout" id="logoutBtn">
+      <input
+        type="email"
+        id="email"
+        placeholder="Admin Email"
+      >
+
+      <input
+        type="password"
+        id="password"
+        placeholder="Password"
+      >
+
+      <button
+        class="primary-btn"
+        id="loginBtn"
+      >
+        Login
+      </button>
+
+      <div
+        id="loginError"
+        class="error"
+      ></div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ADMIN -->
+
+  <section
+    id="adminPage"
+    class="hidden"
+  >
+
+    <header class="topbar">
+
+      <div class="top-title">
+        EXAMOS AI Admin
+      </div>
+
+      <button
+        class="logout-btn"
+        id="logoutBtn"
+      >
         Logout
       </button>
 
     </header>
 
 
-    <div class="container">
+    <main class="container">
 
-      <!-- WELCOME -->
+      <!-- DASHBOARD -->
 
-      <div class="welcome">
+      <div id="dashboardSection">
 
-        <h2>
-          Admin Dashboard 👋
-        </h2>
+        <div class="dashboard-grid">
 
-        <p id="adminEmail">
-          Checking admin account...
-        </p>
+          <div class="dashboard-card">
+            <h3>Boards</h3>
+            <strong id="boardCount">0</strong>
+          </div>
 
-        <div class="status">
-          ● Secure Admin Access
+          <div class="dashboard-card">
+            <h3>Students</h3>
+            <strong>0</strong>
+          </div>
+
+          <div class="dashboard-card">
+            <h3>Tests</h3>
+            <strong>0</strong>
+          </div>
+
+          <div class="dashboard-card">
+            <h3>AI Usage</h3>
+            <strong>0</strong>
+          </div>
+
         </div>
 
       </div>
 
 
-      <!-- STATS -->
+      <!-- CURRICULUM -->
 
-      <div class="grid">
+      <section id="curriculumSection">
 
-        <div class="card">
-          <h3>🏫 Boards</h3>
-          <p>Total Boards</p>
-          <div class="number" id="boardCount">0</div>
-        </div>
-
-        <div class="card">
-          <h3>🎓 Classes</h3>
-          <p>Total Classes</p>
-          <div class="number" id="classCount">0</div>
-        </div>
-
-        <div class="card">
-          <h3>📚 Subjects</h3>
-          <p>Total Subjects</p>
-          <div class="number" id="subjectCount">0</div>
-        </div>
-
-        <div class="card">
-          <h3>📖 Chapters</h3>
-          <p>Total Chapters</p>
-          <div class="number" id="chapterCount">0</div>
-        </div>
-
-      </div>
-
-
-      <!-- =========================
-           CURRICULUM
-      ========================== -->
-
-      <div class="section">
-
-        <h2>
-          📚 Curriculum Management
-        </h2>
-
-        <div class="section-desc">
-          यहाँ से तुम खुद Board, Class, Stream, Subject, Chapter और Topic बना सकते हो।
-        </div>
-
-
-        <!-- BOARD -->
-
-        <div class="form-grid">
-
-          <div class="form-box">
-
-            <h3>🏫 Add Board</h3>
-
-            <input
-              id="boardName"
-              placeholder="जैसे Bihar Board"
-            >
-
-            <input
-              id="boardCode"
-              placeholder="जैसे BSEB"
-            >
-
-            <button
-              class="primary"
-              id="addBoardBtn"
-            >
-              + Add Board
-            </button>
-
-          </div>
-
-
-          <!-- CLASS -->
-
-          <div class="form-box">
-
-            <h3>🎓 Add Class</h3>
-
-            <select id="classBoard">
-              <option value="">
-                पहले Board चुनें
-              </option>
-            </select>
-
-            <input
-              id="className"
-              placeholder="जैसे Class 12"
-            >
-
-            <button
-              class="primary"
-              id="addClassBtn"
-            >
-              + Add Class
-            </button>
-
-          </div>
-
-
-          <!-- SUBJECT -->
-
-          <div class="form-box">
-
-            <h3>📚 Add Subject</h3>
-
-            <select id="subjectBoard">
-              <option value="">
-                Board चुनें
-              </option>
-            </select>
-
-            <select id="subjectClass">
-              <option value="">
-                Class चुनें
-              </option>
-            </select>
-
-            <input
-              id="subjectName"
-              placeholder="जैसे Physics"
-            >
-
-            <input
-              id="subjectStream"
-              placeholder="Stream: Science / Commerce / Arts / General"
-            >
-
-            <button
-              class="primary"
-              id="addSubjectBtn"
-            >
-              + Add Subject
-            </button>
-
-          </div>
-
-
-          <!-- CHAPTER -->
-
-          <div class="form-box">
-
-            <h3>📖 Add Chapter</h3>
-
-            <select id="chapterBoard">
-              <option value="">
-                Board चुनें
-              </option>
-            </select>
-
-            <select id="chapterClass">
-              <option value="">
-                Class चुनें
-              </option>
-            </select>
-
-            <select id="chapterSubject">
-              <option value="">
-                Subject चुनें
-              </option>
-            </select>
-
-            <input
-              id="chapterName"
-              placeholder="जैसे Chapter 1 — Electric Charges"
-            >
-
-            <button
-              class="primary"
-              id="addChapterBtn"
-            >
-              + Add Chapter
-            </button>
-
-          </div>
-
-
-          <!-- TOPIC -->
-
-          <div class="form-box">
-
-            <h3>📝 Add Topic</h3>
-
-            <select id="topicBoard">
-              <option value="">
-                Board चुनें
-              </option>
-            </select>
-
-            <select id="topicClass">
-              <option value="">
-                Class चुनें
-              </option>
-            </select>
-
-            <select id="topicSubject">
-              <option value="">
-                Subject चुनें
-              </option>
-            </select>
-
-            <select id="topicChapter">
-              <option value="">
-                Chapter चुनें
-              </option>
-            </select>
-
-            <input
-              id="topicName"
-              placeholder="जैसे Coulomb's Law"
-            >
-
-            <button
-              class="primary"
-              id="addTopicBtn"
-            >
-              + Add Topic
-            </button>
-
-          </div>
-
-        </div>
-
-
-        <!-- CURRENT PATH -->
-
-        <div
-          class="path"
-          id="currentPath"
+        <button
+          id="backBtn"
+          class="back-btn hidden"
         >
-          Curriculum path यहाँ दिखाई देगा।
-        </div>
+          ← Back
+        </button>
 
 
-        <!-- LISTS -->
+        <div class="section-head">
 
-        <div class="item-list">
+          <div>
+            <div
+              id="pageTitle"
+              class="section-title"
+            >
+              Boards
+            </div>
 
-          <h3>
-            📋 Current Curriculum
-          </h3>
-
-          <div id="curriculumList">
-            <div class="empty">
-              अभी कोई curriculum नहीं है।
+            <div
+              id="breadcrumb"
+              class="path"
+            >
+              Curriculum
             </div>
           </div>
 
-        </div>
-
-      </div>
-
-
-      <!-- =========================
-           AI SYSTEM
-      ========================== -->
-
-      <div class="section">
-
-        <h2>
-          🤖 AI Learning Engine
-        </h2>
-
-        <div class="ai-note">
-
-          Admin सिर्फ syllabus बनाएगा।
-          <br><br>
-
-          Questions, tests, practice,
-          explanations, weak-topic practice,
-          retest और AI teaching बाद में
-          इसी curriculum के आधार पर AI संभालेगा।
+          <button
+            id="addBtn"
+            class="add-btn"
+          >
+            + Add Board
+          </button>
 
         </div>
 
+
+        <div
+          id="items"
+          class="items"
+        ></div>
+
+      </section>
+
+    </main>
+
+  </section>
+
+
+  <!-- MODAL -->
+
+  <div
+    id="modal"
+    class="modal hidden"
+  >
+
+    <div class="modal-box">
+
+      <div
+        id="modalTitle"
+        class="modal-title"
+      >
+        Add Board
       </div>
 
+      <input
+        id="itemName"
+        placeholder="Name"
+      >
 
-      <!-- STUDENTS -->
+      <input
+        id="itemCode"
+        placeholder="Code (optional)"
+      >
 
-      <div class="section">
+      <select
+        id="streamSelect"
+        class="hidden"
+      >
+        <option value="">General</option>
+        <option value="Science">Science</option>
+        <option value="Commerce">Commerce</option>
+        <option value="Arts">Arts</option>
+      </select>
 
-        <h2>
-          👨‍🎓 Students
-        </h2>
-
-        <p class="section-desc">
-          Student accounts और उनकी activity यहाँ दिखाई जाएगी।
-        </p>
-
-        <div class="number" id="studentCount2">
-          0
-        </div>
-
-      </div>
-
-
-      <!-- PERFORMANCE -->
-
-      <div class="section">
-
-        <h2>
-          📊 Student Performance
-        </h2>
-
-        <p class="section-desc">
-          AI student performance और weak topics का analysis बाद में यहाँ दिखाएगा।
-        </p>
-
-      </div>
-
-
-      <!-- FEEDBACK -->
-
-      <div class="section">
-
-        <h2>
-          💬 Feedback
-        </h2>
-
-        <p class="section-desc">
-          Students का feedback यहाँ दिखाई देगा।
-        </p>
-
-      </div>
-
-
-      <!-- ANNOUNCEMENT -->
-
-      <div class="section">
-
-        <h2>
-          📢 Announcements
-        </h2>
-
-        <input
-          id="announcementTitle"
-          placeholder="Announcement title"
-        >
-
-        <input
-          id="announcementText"
-          placeholder="Announcement message"
-        >
+      <div class="modal-actions">
 
         <button
-          class="primary"
-          id="announcementBtn"
+          id="cancelBtn"
+          class="cancel-btn"
         >
-          Publish Announcement
+          Cancel
+        </button>
+
+        <button
+          id="saveBtn"
+          class="save-btn"
+        >
+          Save
         </button>
 
       </div>
@@ -759,10 +614,6 @@
   </div>
 
 
-  <!-- =========================
-       FIREBASE + APP
-  ========================== -->
-
   <script type="module">
 
     import {
@@ -770,40 +621,33 @@
       db
     } from "./firebase-config.js";
 
-
     import {
       signInWithEmailAndPassword,
       onAuthStateChanged,
       signOut
     } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 
-
     import {
       collection,
-      addDoc,
-      getDocs,
-      getDoc,
       doc,
+      getDoc,
+      getDocs,
+      addDoc,
+      updateDoc,
       deleteDoc,
       serverTimestamp
     } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
 
-    // =========================
-    // ELEMENTS
-    // =========================
+    /* =========================
+       ELEMENTS
+    ========================= */
 
-    const loginScreen =
-      document.getElementById("loginScreen");
+    const loginPage =
+      document.getElementById("loginPage");
 
-    const adminPanel =
-      document.getElementById("adminPanel");
-
-    const emailInput =
-      document.getElementById("email");
-
-    const passwordInput =
-      document.getElementById("password");
+    const adminPage =
+      document.getElementById("adminPage");
 
     const loginBtn =
       document.getElementById("loginBtn");
@@ -814,28 +658,93 @@
     const loginError =
       document.getElementById("loginError");
 
-    const adminEmail =
-      document.getElementById("adminEmail");
+    const loading =
+      document.getElementById("loading");
+
+    const pageTitle =
+      document.getElementById("pageTitle");
+
+    const breadcrumb =
+      document.getElementById("breadcrumb");
+
+    const items =
+      document.getElementById("items");
+
+    const addBtn =
+      document.getElementById("addBtn");
+
+    const backBtn =
+      document.getElementById("backBtn");
+
+    const modal =
+      document.getElementById("modal");
+
+    const modalTitle =
+      document.getElementById("modalTitle");
+
+    const itemName =
+      document.getElementById("itemName");
+
+    const itemCode =
+      document.getElementById("itemCode");
+
+    const streamSelect =
+      document.getElementById("streamSelect");
+
+    const cancelBtn =
+      document.getElementById("cancelBtn");
+
+    const saveBtn =
+      document.getElementById("saveBtn");
+
+    const boardCount =
+      document.getElementById("boardCount");
 
 
-    // =========================
-    // LOGIN
-    // =========================
+    /* =========================
+       STATE
+    ========================= */
+
+    let currentLevel = "boards";
+
+    let currentBoard = null;
+    let currentClass = null;
+    let currentSubject = null;
+    let currentChapter = null;
+
+    let editingId = null;
+
+
+    /* =========================
+       FIREBASE LOADING
+    ========================= */
+
+    function showLoading() {
+      loading.classList.remove("hidden");
+    }
+
+    function hideLoading() {
+      loading.classList.add("hidden");
+    }
+
+
+    /* =========================
+       ADMIN AUTH
+    ========================= */
 
     loginBtn.addEventListener(
       "click",
       async () => {
 
-        const email =
-          emailInput.value.trim();
-
-        const password =
-          passwordInput.value;
-
         loginError.textContent = "";
 
+        const email =
+          document.getElementById("email").value.trim();
 
-        if(!email || !password){
+        const password =
+          document.getElementById("password").value;
+
+        if (!email || !password) {
 
           loginError.textContent =
             "Email और password डालें।";
@@ -843,13 +752,9 @@
           return;
         }
 
+        try {
 
-        loginBtn.disabled = true;
-        loginBtn.textContent =
-          "Checking...";
-
-
-        try{
+          showLoading();
 
           await signInWithEmailAndPassword(
             auth,
@@ -857,128 +762,20 @@
             password
           );
 
-        }catch(error){
-
-          console.error(error);
+        } catch (error) {
 
           loginError.textContent =
-            "Login failed. Email या password गलत है।";
+            error.message;
 
-        }
+        } finally {
 
-
-        loginBtn.disabled = false;
-
-        loginBtn.textContent =
-          "Login as Admin";
-
-      }
-    );
-
-
-    // =========================
-    // AUTH + ADMIN CHECK
-    // =========================
-
-    onAuthStateChanged(
-      auth,
-      async (user) => {
-
-        if(!user){
-
-          loginScreen.style.display =
-            "block";
-
-          adminPanel.style.display =
-            "none";
-
-          return;
-        }
-
-
-        try{
-
-          const adminRef =
-            doc(
-              db,
-              "admins",
-              user.uid
-            );
-
-
-          const adminSnap =
-            await getDoc(adminRef);
-
-
-          if(!adminSnap.exists()){
-
-            alert(
-              "Access Denied: यह account Admin नहीं है।"
-            );
-
-            await signOut(auth);
-
-            return;
-          }
-
-
-          const adminData =
-            adminSnap.data();
-
-
-          if(
-            adminData.role !== "admin"
-          ){
-
-            alert(
-              "Access Denied: Admin permission नहीं है।"
-            );
-
-            await signOut(auth);
-
-            return;
-          }
-
-
-          loginScreen.style.display =
-            "none";
-
-          adminPanel.style.display =
-            "block";
-
-
-          adminEmail.textContent =
-            "Logged in as: " +
-            user.email;
-
-
-          await loadBoards();
-
-          await updateStats();
-
-
-        }catch(error){
-
-          console.error(
-            "Admin verification error:",
-            error
-          );
-
-          alert(
-            "Admin verification failed."
-          );
-
-          await signOut(auth);
+          hideLoading();
 
         }
 
       }
     );
 
-
-    // =========================
-    // LOGOUT
-    // =========================
 
     logoutBtn.addEventListener(
       "click",
@@ -990,321 +787,174 @@
     );
 
 
-    // =====================================================
-    // CURRICULUM
-    // =====================================================
+    onAuthStateChanged(
+      auth,
+      async (user) => {
 
+        if (!user) {
 
-    let boards = [];
+          loginPage.classList.remove("hidden");
+          adminPage.classList.add("hidden");
 
-
-    // =========================
-    // LOAD BOARDS
-    // =========================
-
-    async function loadBoards(){
-
-      const snap =
-        await getDocs(
-          collection(
-            db,
-            "boards"
-          )
-        );
-
-
-      boards = [];
-
-
-      snap.forEach(
-        (item) => {
-
-          boards.push({
-
-            id:item.id,
-
-            ...item.data()
-
-          });
-
+          return;
         }
-      );
 
+        try {
 
-      fillBoardSelects();
+          showLoading();
 
-      await loadCurriculumList();
+          const adminRef =
+            doc(db, "admins", user.uid);
 
-    }
+          const adminSnap =
+            await getDoc(adminRef);
 
+          if (
+            !adminSnap.exists() ||
+            adminSnap.data().role !== "admin"
+          ) {
 
-    // =========================
-    // BOARD SELECTS
-    // =========================
+            await signOut(auth);
 
-    function fillBoardSelects(){
-
-      const selects = [
-
-        "classBoard",
-        "subjectBoard",
-        "chapterBoard",
-        "topicBoard"
-
-      ];
-
-
-      selects.forEach(
-        (id) => {
-
-          const select =
-            document.getElementById(id);
-
-
-          select.innerHTML =
-            '<option value="">Board चुनें</option>';
-
-
-          boards.forEach(
-            (board) => {
-
-              const option =
-                document.createElement(
-                  "option"
-                );
-
-
-              option.value =
-                board.id;
-
-              option.textContent =
-                board.name;
-
-
-              select.appendChild(
-                option
-              );
-
-            }
-          );
-
-        }
-      );
-
-    }
-
-
-    // =========================
-    // ADD BOARD
-    // =========================
-
-    document
-      .getElementById("addBoardBtn")
-      .addEventListener(
-        "click",
-        async () => {
-
-          const name =
-            document
-              .getElementById("boardName")
-              .value
-              .trim();
-
-
-          const code =
-            document
-              .getElementById("boardCode")
-              .value
-              .trim();
-
-
-          if(!name){
-
-            alert(
-              "Board का नाम डालें।"
-            );
+            loginError.textContent =
+              "आपके पास Admin access नहीं है।";
 
             return;
           }
 
+          loginPage.classList.add("hidden");
+          adminPage.classList.remove("hidden");
 
-          try{
+          await showBoards();
 
-            await addDoc(
-              collection(
-                db,
-                "boards"
-              ),
-              {
+        } catch (error) {
 
-                name:name,
+          console.error(error);
 
-                code:code || "",
+          await signOut(auth);
 
-                createdAt:
-                  serverTimestamp()
+          loginError.textContent =
+            "Admin verification failed.";
 
-              }
-            );
+        } finally {
 
+          hideLoading();
 
-            document
-              .getElementById("boardName")
-              .value = "";
+        }
+
+      }
+    );
 
 
-            document
-              .getElementById("boardCode")
-              .value = "";
+    /* =========================
+       FIRESTORE PATH
+    ========================= */
+
+    function getCurrentCollection() {
+
+      if (currentLevel === "boards") {
+
+        return collection(
+          db,
+          "boards"
+        );
+
+      }
+
+      if (currentLevel === "classes") {
+
+        return collection(
+          db,
+          "boards",
+          currentBoard.id,
+          "classes"
+        );
+
+      }
+
+      if (currentLevel === "subjects") {
+
+        return collection(
+          db,
+          "boards",
+          currentBoard.id,
+          "classes",
+          currentClass.id,
+          "subjects"
+        );
+
+      }
+
+      if (currentLevel === "chapters") {
+
+        return collection(
+          db,
+          "boards",
+          currentBoard.id,
+          "classes",
+          currentClass.id,
+          "subjects",
+          currentSubject.id,
+          "chapters"
+        );
+
+      }
+
+      if (currentLevel === "topics") {
+
+        return collection(
+          db,
+          "boards",
+          currentBoard.id,
+          "classes",
+          currentClass.id,
+          "subjects",
+          currentSubject.id,
+          "chapters",
+          currentChapter.id,
+          "topics"
+        );
+
+      }
+
+    }
 
 
-            alert(
-              "Board successfully added."
-            );
+    /* =========================
+       SORTING
+    ========================= */
 
+    function sortItems(data) {
 
-            await loadBoards();
+      return data.sort(
+        (a,b) => {
 
-            await updateStats();
+          const aOrder =
+            typeof a.order === "number"
+              ? a.order
+              : 999999999;
 
+          const bOrder =
+            typeof b.order === "number"
+              ? b.order
+              : 999999999;
 
-          }catch(error){
+          if (aOrder !== bOrder) {
 
-            console.error(error);
-
-            alert(
-              "Board save नहीं हुआ।"
-            );
+            return aOrder - bOrder;
 
           }
 
-        }
-      );
-
-
-    // =========================
-    // BOARD CHANGE
-    // =========================
-
-    document
-      .getElementById("subjectBoard")
-      .addEventListener(
-        "change",
-        async (e) => {
-
-          await loadClasses(
-            e.target.value,
-            "subjectClass"
-          );
-
-        }
-      );
-
-
-    document
-      .getElementById("chapterBoard")
-      .addEventListener(
-        "change",
-        async (e) => {
-
-          await loadClasses(
-            e.target.value,
-            "chapterClass"
-          );
-
-        }
-      );
-
-
-    document
-      .getElementById("topicBoard")
-      .addEventListener(
-        "change",
-        async (e) => {
-
-          await loadClasses(
-            e.target.value,
-            "topicClass"
-          );
-
-        }
-      );
-
-
-    document
-      .getElementById("classBoard")
-      .addEventListener(
-        "change",
-        async (e) => {
-
-          document
-            .getElementById("currentPath")
-            .textContent =
-              getBoardName(e.target.value);
-
-        }
-      );
-
-
-    // =========================
-    // LOAD CLASSES
-    // =========================
-
-    async function loadClasses(
-      boardId,
-      selectId
-    ){
-
-      const select =
-        document.getElementById(
-          selectId
-        );
-
-
-      select.innerHTML =
-        '<option value="">Class चुनें</option>';
-
-
-      if(!boardId){
-
-        return;
-      }
-
-
-      const snap =
-        await getDocs(
-          collection(
-            db,
-            "boards",
-            boardId,
-            "classes"
-          )
-        );
-
-
-      snap.forEach(
-        (item) => {
-
-          const data =
-            item.data();
-
-
-          const option =
-            document.createElement(
-              "option"
-            );
-
-
-          option.value =
-            item.id;
-
-
-          option.textContent =
-            data.name;
-
-
-          select.appendChild(
-            option
+          return (
+            (a.name || "")
+              .localeCompare(
+                b.name || "",
+                undefined,
+                {
+                  numeric: true,
+                  sensitivity: "base"
+                }
+              )
           );
 
         }
@@ -1313,1752 +963,912 @@
     }
 
 
-    // =========================
-    // ADD CLASS
-    // =========================
+    /* =========================
+       LOAD ITEMS
+    ========================= */
 
-    document
-      .getElementById("addClassBtn")
-      .addEventListener(
-        "click",
-        async () => {
+    async function loadItems() {
 
-          const boardId =
-            document
-              .getElementById("classBoard")
-              .value;
+      showLoading();
 
+      try {
 
-          const name =
-            document
-              .getElementById("className")
-              .value
-              .trim();
-
-
-          if(!boardId){
-
-            alert(
-              "पहले Board चुनें।"
-            );
-
-            return;
-          }
-
-
-          if(!name){
-
-            alert(
-              "Class का नाम डालें।"
-            );
-
-            return;
-          }
-
-
-          try{
-
-            await addDoc(
-              collection(
-                db,
-                "boards",
-                boardId,
-                "classes"
-              ),
-              {
-
-                name:name,
-
-                createdAt:
-                  serverTimestamp()
-
-              }
-            );
-
-
-            document
-              .getElementById("className")
-              .value = "";
-
-
-            alert(
-              "Class successfully added."
-            );
-
-
-            await loadClasses(
-              boardId,
-              "classBoard"
-            );
-
-
-            await updateStats();
-
-
-            await loadCurriculumList();
-
-
-          }catch(error){
-
-            console.error(error);
-
-            alert(
-              "Class save नहीं हुई।"
-            );
-
-          }
-
-        }
-      );
-
-
-    // =========================
-    // SUBJECT BOARD → CLASS
-    // =========================
-
-    document
-      .getElementById("subjectClass")
-      .addEventListener(
-        "change",
-        async (e) => {
-
-          const boardId =
-            document
-              .getElementById("subjectBoard")
-              .value;
-
-
-          const classId =
-            e.target.value;
-
-
-          if(
-            boardId &&
-            classId
-          ){
-
-            updatePath(
-              boardId,
-              classId,
-              "",
-              "",
-              ""
-            );
-
-          }
-
-        }
-      );
-
-
-    // =========================
-    // ADD SUBJECT
-    // =========================
-
-    document
-      .getElementById("addSubjectBtn")
-      .addEventListener(
-        "click",
-        async () => {
-
-          const boardId =
-            document
-              .getElementById("subjectBoard")
-              .value;
-
-
-          const classId =
-            document
-              .getElementById("subjectClass")
-              .value;
-
-
-          const name =
-            document
-              .getElementById("subjectName")
-              .value
-              .trim();
-
-
-          const stream =
-            document
-              .getElementById("subjectStream")
-              .value
-              .trim();
-
-
-          if(
-            !boardId ||
-            !classId
-          ){
-
-            alert(
-              "Board और Class चुनें।"
-            );
-
-            return;
-          }
-
-
-          if(!name){
-
-            alert(
-              "Subject का नाम डालें।"
-            );
-
-            return;
-          }
-
-
-          try{
-
-            await addDoc(
-              collection(
-                db,
-                "boards",
-                boardId,
-                "classes",
-                classId,
-                "subjects"
-              ),
-              {
-
-                name:name,
-
-                stream:
-                  stream || "General",
-
-                createdAt:
-                  serverTimestamp()
-
-              }
-            );
-
-
-            document
-              .getElementById("subjectName")
-              .value = "";
-
-
-            document
-              .getElementById("subjectStream")
-              .value = "";
-
-
-            alert(
-              "Subject successfully added."
-            );
-
-
-            await updateStats();
-
-            await loadCurriculumList();
-
-
-          }catch(error){
-
-            console.error(error);
-
-            alert(
-              "Subject save नहीं हुआ।"
-            );
-
-          }
-
-        }
-      );
-
-
-    // =========================
-    // CHAPTER CLASS CHANGE
-    // =========================
-
-    document
-      .getElementById("chapterClass")
-      .addEventListener(
-        "change",
-        async (e) => {
-
-          const boardId =
-            document
-              .getElementById("chapterBoard")
-              .value;
-
-
-          const classId =
-            e.target.value;
-
-
-          await loadSubjects(
-            boardId,
-            classId,
-            "chapterSubject"
+        const snap =
+          await getDocs(
+            getCurrentCollection()
           );
 
-        }
-      );
+        const data = [];
 
+        snap.forEach(
+          d => {
 
-    // =========================
-    // TOPIC CLASS CHANGE
-    // =========================
+            data.push({
+              id: d.id,
+              ...d.data()
+            });
 
-    document
-      .getElementById("topicClass")
-      .addEventListener(
-        "change",
-        async (e) => {
-
-          const boardId =
-            document
-              .getElementById("topicBoard")
-              .value;
-
-
-          const classId =
-            e.target.value;
-
-
-          await loadSubjects(
-            boardId,
-            classId,
-            "topicSubject"
-          );
-
-        }
-      );
-
-
-    // =========================
-    // LOAD SUBJECTS
-    // =========================
-
-    async function loadSubjects(
-      boardId,
-      classId,
-      selectId
-    ){
-
-      const select =
-        document.getElementById(
-          selectId
+          }
         );
 
+        return sortItems(data);
 
-      select.innerHTML =
-        '<option value="">Subject चुनें</option>';
+      } finally {
 
+        hideLoading();
 
-      if(
-        !boardId ||
-        !classId
-      ){
-
-        return;
       }
-
-
-      const snap =
-        await getDocs(
-          collection(
-            db,
-            "boards",
-            boardId,
-            "classes",
-            classId,
-            "subjects"
-          )
-        );
-
-
-      snap.forEach(
-        (item) => {
-
-          const data =
-            item.data();
-
-
-          const option =
-            document.createElement(
-              "option"
-            );
-
-
-          option.value =
-            item.id;
-
-
-          option.textContent =
-            data.stream &&
-            data.stream !== "General"
-
-              ? data.name +
-                " — " +
-                data.stream
-
-              : data.name;
-
-
-          select.appendChild(
-            option
-          );
-
-        }
-      );
 
     }
 
 
-    // =========================
-    // CHAPTER SUBJECT CHANGE
-    // =========================
+    /* =========================
+       SHOW BOARDS
+    ========================= */
 
-    document
-      .getElementById("chapterSubject")
-      .addEventListener(
-        "change",
-        (e) => {
+    async function showBoards() {
 
-          updatePath(
+      currentLevel = "boards";
 
-            document
-              .getElementById("chapterBoard")
-              .value,
+      currentBoard = null;
+      currentClass = null;
+      currentSubject = null;
+      currentChapter = null;
 
-            document
-              .getElementById("chapterClass")
-              .value,
+      pageTitle.textContent =
+        "Boards";
 
-            e.target.value,
+      breadcrumb.textContent =
+        "Curriculum";
 
-            "",
+      addBtn.textContent =
+        "+ Add Board";
 
-            ""
+      backBtn.classList.add("hidden");
 
-          );
+      itemCode.classList.remove("hidden");
+      streamSelect.classList.add("hidden");
 
-        }
-      );
+      const data =
+        await loadItems();
 
+      boardCount.textContent =
+        data.length;
 
-    // =========================
-    // TOPIC SUBJECT CHANGE
-    // =========================
-
-    document
-      .getElementById("topicSubject")
-      .addEventListener(
-        "change",
-        async (e) => {
-
-          const boardId =
-            document
-              .getElementById("topicBoard")
-              .value;
-
-
-          const classId =
-            document
-              .getElementById("topicClass")
-              .value;
-
-
-          const subjectId =
-            e.target.value;
-
-
-          await loadChapters(
-            boardId,
-            classId,
-            subjectId,
-            "topicChapter"
-          );
-
-        }
-      );
-
-
-    // =========================
-    // LOAD CHAPTERS
-    // =========================
-
-    async function loadChapters(
-      boardId,
-      classId,
-      subjectId,
-      selectId
-    ){
-
-      const select =
-        document.getElementById(
-          selectId
-        );
-
-
-      select.innerHTML =
-        '<option value="">Chapter चुनें</option>';
-
-
-      if(
-        !boardId ||
-        !classId ||
-        !subjectId
-      ){
-
-        return;
-      }
-
-
-      const snap =
-        await getDocs(
-          collection(
-            db,
-            "boards",
-            boardId,
-            "classes",
-            classId,
-            "subjects",
-            subjectId,
-            "chapters"
-          )
-        );
-
-
-      snap.forEach(
-        (item) => {
-
-          const option =
-            document.createElement(
-              "option"
-            );
-
-
-          option.value =
-            item.id;
-
-
-          option.textContent =
-            item.data().name;
-
-
-          select.appendChild(
-            option
-          );
-
-        }
-      );
+      renderItems(data);
 
     }
 
 
-    // =========================
-    // ADD CHAPTER
-    // =========================
+    /* =========================
+       SHOW CLASSES
+    ========================= */
 
-    document
-      .getElementById("addChapterBtn")
-      .addEventListener(
-        "click",
-        async () => {
+    async function showClasses(board) {
 
-          const boardId =
-            document
-              .getElementById("chapterBoard")
-              .value;
+      currentLevel = "classes";
 
+      currentBoard = board;
 
-          const classId =
-            document
-              .getElementById("chapterClass")
-              .value;
+      currentClass = null;
+      currentSubject = null;
+      currentChapter = null;
 
+      pageTitle.textContent =
+        "Classes";
 
-          const subjectId =
-            document
-              .getElementById("chapterSubject")
-              .value;
+      breadcrumb.textContent =
+        `Curriculum › ${board.name}`;
 
+      addBtn.textContent =
+        "+ Add Class";
 
-          const name =
-            document
-              .getElementById("chapterName")
-              .value
-              .trim();
+      backBtn.classList.remove("hidden");
 
+      itemCode.classList.add("hidden");
+      streamSelect.classList.add("hidden");
 
-          if(
-            !boardId ||
-            !classId ||
-            !subjectId
-          ){
+      const data =
+        await loadItems();
 
-            alert(
-              "Board, Class और Subject चुनें।"
-            );
-
-            return;
-          }
-
-
-          if(!name){
-
-            alert(
-              "Chapter का नाम डालें।"
-            );
-
-            return;
-          }
-
-
-          try{
-
-            await addDoc(
-              collection(
-                db,
-                "boards",
-                boardId,
-                "classes",
-                classId,
-                "subjects",
-                subjectId,
-                "chapters"
-              ),
-              {
-
-                name:name,
-
-                createdAt:
-                  serverTimestamp()
-
-              }
-            );
-
-
-            document
-              .getElementById("chapterName")
-              .value = "";
-
-
-            alert(
-              "Chapter successfully added."
-            );
-
-
-            await updateStats();
-
-            await loadChapters(
-              boardId,
-              classId,
-              subjectId,
-              "topicChapter"
-            );
-
-            await loadCurriculumList();
-
-
-          }catch(error){
-
-            console.error(error);
-
-            alert(
-              "Chapter save नहीं हुआ।"
-            );
-
-          }
-
-        }
-      );
-
-
-    // =========================
-    // TOPIC CHAPTER CHANGE
-    // =========================
-
-    document
-      .getElementById("topicChapter")
-      .addEventListener(
-        "change",
-        (e) => {
-
-          updatePath(
-
-            document
-              .getElementById("topicBoard")
-              .value,
-
-            document
-              .getElementById("topicClass")
-              .value,
-
-            document
-              .getElementById("topicSubject")
-              .value,
-
-            e.target.value,
-
-            ""
-
-          );
-
-        }
-      );
-
-
-    // =========================
-    // ADD TOPIC
-    // =========================
-
-    document
-      .getElementById("addTopicBtn")
-      .addEventListener(
-        "click",
-        async () => {
-
-          const boardId =
-            document
-              .getElementById("topicBoard")
-              .value;
-
-
-          const classId =
-            document
-              .getElementById("topicClass")
-              .value;
-
-
-          const subjectId =
-            document
-              .getElementById("topicSubject")
-              .value;
-
-
-          const chapterId =
-            document
-              .getElementById("topicChapter")
-              .value;
-
-
-          const name =
-            document
-              .getElementById("topicName")
-              .value
-              .trim();
-
-
-          if(
-            !boardId ||
-            !classId ||
-            !subjectId ||
-            !chapterId
-          ){
-
-            alert(
-              "Board, Class, Subject और Chapter चुनें।"
-            );
-
-            return;
-          }
-
-
-          if(!name){
-
-            alert(
-              "Topic का नाम डालें।"
-            );
-
-            return;
-          }
-
-
-          try{
-
-            await addDoc(
-              collection(
-                db,
-                "boards",
-                boardId,
-                "classes",
-                classId,
-                "subjects",
-                subjectId,
-                "chapters",
-                chapterId,
-                "topics"
-              ),
-              {
-
-                name:name,
-
-                createdAt:
-                  serverTimestamp()
-
-              }
-            );
-
-
-            document
-              .getElementById("topicName")
-              .value = "";
-
-
-            alert(
-              "Topic successfully added."
-            );
-
-
-            await loadCurriculumList();
-
-
-          }catch(error){
-
-            console.error(error);
-
-            alert(
-              "Topic save नहीं हुआ।"
-            );
-
-          }
-
-        }
-      );
-
-
-    // =========================
-    // PATH
-    // =========================
-
-    function updatePath(
-      boardId,
-      classId,
-      subjectId,
-      chapterId,
-      topicId
-    ){
-
-      const board =
-        getBoardName(boardId);
-
-
-      let text =
-        board || "Board";
-
-
-      if(classId){
-
-        text +=
-          " → Class";
-
-      }
-
-
-      if(subjectId){
-
-        text +=
-          " → Subject";
-
-      }
-
-
-      if(chapterId){
-
-        text +=
-          " → Chapter";
-
-      }
-
-
-      if(topicId){
-
-        text +=
-          " → Topic";
-
-      }
-
-
-      document
-        .getElementById("currentPath")
-        .textContent =
-          text;
+      renderItems(data);
 
     }
 
 
-    function getBoardName(
-      boardId
-    ){
+    /* =========================
+       SHOW SUBJECTS
+    ========================= */
 
-      const board =
-        boards.find(
-          item =>
-            item.id === boardId
-        );
+    async function showSubjects(cls) {
 
+      currentLevel = "subjects";
 
-      return board
-        ? board.name
-        : "";
+      currentClass = cls;
+
+      currentSubject = null;
+      currentChapter = null;
+
+      pageTitle.textContent =
+        "Subjects";
+
+      breadcrumb.textContent =
+        `Curriculum › ${currentBoard.name} › ${cls.name}`;
+
+      addBtn.textContent =
+        "+ Add Subject";
+
+      backBtn.classList.remove("hidden");
+
+      itemCode.classList.add("hidden");
+      streamSelect.classList.remove("hidden");
+
+      const data =
+        await loadItems();
+
+      renderItems(data);
 
     }
 
 
-    // =========================
-    // CURRICULUM LIST
-    // =========================
+    /* =========================
+       SHOW CHAPTERS
+    ========================= */
 
-    async function loadCurriculumList(){
+    async function showChapters(subject) {
 
-      const list =
-        document
-          .getElementById(
-            "curriculumList"
-          );
+      currentLevel = "chapters";
+
+      currentSubject = subject;
+
+      currentChapter = null;
+
+      pageTitle.textContent =
+        "Chapters";
+
+      breadcrumb.textContent =
+        `Curriculum › ${currentBoard.name} › ${currentClass.name} › ${subject.name}`;
+
+      addBtn.textContent =
+        "+ Add Chapter";
+
+      backBtn.classList.remove("hidden");
+
+      itemCode.classList.add("hidden");
+      streamSelect.classList.add("hidden");
+
+      const data =
+        await loadItems();
+
+      renderItems(data);
+
+    }
 
 
-      list.innerHTML =
-        '<div class="empty">Curriculum load हो रहा है...</div>';
+    /* =========================
+       SHOW TOPICS
+    ========================= */
+
+    async function showTopics(chapter) {
+
+      currentLevel = "topics";
+
+      currentChapter = chapter;
+
+      pageTitle.textContent =
+        "Topics";
+
+      breadcrumb.textContent =
+        `Curriculum › ${currentBoard.name} › ${currentClass.name} › ${currentSubject.name} › ${chapter.name}`;
+
+      addBtn.textContent =
+        "+ Add Topic";
+
+      backBtn.classList.remove("hidden");
+
+      itemCode.classList.add("hidden");
+      streamSelect.classList.add("hidden");
+
+      const data =
+        await loadItems();
+
+      renderItems(data);
+
+    }
 
 
-      if(!boards.length){
+    /* =========================
+       RENDER
+    ========================= */
 
-        list.innerHTML =
-          '<div class="empty">अभी कोई Board नहीं है।</div>';
+    function renderItems(data) {
 
-        return;
-      }
+      items.innerHTML = "";
 
+      if (!data.length) {
 
-      let html = "";
+        const empty =
+          document.createElement("div");
 
+        empty.className = "empty";
 
-      for(
-        const board of boards
-      ){
-
-        html += `
-          <div class="item">
-            <div>
-              <div class="item-name">
-                🏫 ${escapeHtml(board.name)}
-              </div>
-              <div class="item-meta">
-                ${escapeHtml(board.code || "")}
-              </div>
-            </div>
-
-            <button
-              class="delete-btn"
-              data-delete-board="${board.id}"
-            >
-              Delete
-            </button>
-          </div>
+        empty.innerHTML = `
+          <strong>अभी कुछ नहीं है</strong>
+          <span>
+            ऊपर दिए गए Add button से नया ${getSingularName()} बनाएं।
+          </span>
         `;
 
+        items.appendChild(empty);
 
-        const classesSnap =
-          await getDocs(
-            collection(
-              db,
-              "boards",
-              board.id,
-              "classes"
-            )
+        return;
+
+      }
+
+
+      data.forEach(
+        item => {
+
+          const box =
+            document.createElement("div");
+
+          box.className = "item";
+
+
+          const main =
+            document.createElement("div");
+
+          main.className =
+            "item-main";
+
+
+          const name =
+            document.createElement("div");
+
+          name.className =
+            "item-name";
+
+          name.textContent =
+            item.name || "Unnamed";
+
+
+          const sub =
+            document.createElement("div");
+
+          sub.className =
+            "item-sub";
+
+          if (currentLevel === "boards") {
+
+            sub.textContent =
+              item.code
+                ? `Code: ${item.code}`
+                : "Board";
+
+          }
+
+          else if (currentLevel === "classes") {
+
+            sub.textContent =
+              item.classNumber
+                ? `Class ${item.classNumber}`
+                : "Class";
+
+          }
+
+          else if (currentLevel === "subjects") {
+
+            sub.textContent =
+              item.stream
+                ? item.stream
+                : "General";
+
+          }
+
+          else if (currentLevel === "chapters") {
+
+            sub.textContent =
+              item.chapterNumber
+                ? `Chapter ${item.chapterNumber}`
+                : "Chapter";
+
+          }
+
+          else {
+
+            sub.textContent =
+              "Topic";
+
+          }
+
+
+          main.appendChild(name);
+          main.appendChild(sub);
+
+
+          const actions =
+            document.createElement("div");
+
+          actions.className =
+            "actions";
+
+
+          const edit =
+            document.createElement("button");
+
+          edit.className =
+            "small-btn";
+
+          edit.textContent =
+            "Edit";
+
+          edit.addEventListener(
+            "click",
+            (e) => {
+
+              e.stopPropagation();
+
+              openEditModal(item);
+
+            }
           );
 
 
-        for(
-          const classDoc of classesSnap.docs
-        ){
+          const del =
+            document.createElement("button");
 
-          const classData =
-            classDoc.data();
+          del.className =
+            "small-btn delete-btn";
 
+          del.textContent =
+            "Delete";
 
-          html += `
-            <div
-              class="item"
-              style="margin-left:12px"
-            >
-              <div>
-                <div class="item-name">
-                  🎓 ${escapeHtml(classData.name)}
-                </div>
+          del.addEventListener(
+            "click",
+            (e) => {
 
-                <div class="item-meta">
-                  ${escapeHtml(board.name)}
-                </div>
-              </div>
+              e.stopPropagation();
 
-              <button
-                class="delete-btn"
-                data-delete-class-board="${board.id}"
-                data-delete-class="${classDoc.id}"
-              >
-                Delete
-              </button>
-            </div>
-          `;
+              deleteItem(item);
+
+            }
+          );
 
 
-          const subjectsSnap =
-            await getDocs(
-              collection(
-                db,
-                "boards",
-                board.id,
-                "classes",
-                classDoc.id,
-                "subjects"
-              )
-            );
+          actions.appendChild(edit);
+          actions.appendChild(del);
 
 
-          for(
-            const subjectDoc
-            of subjectsSnap.docs
-          ){
-
-            const subjectData =
-              subjectDoc.data();
+          box.appendChild(main);
+          box.appendChild(actions);
 
 
-            html += `
-              <div
-                class="item"
-                style="margin-left:24px"
-              >
-                <div>
-                  <div class="item-name">
-                    📚 ${escapeHtml(subjectData.name)}
-                  </div>
+          if (
+            currentLevel !== "topics"
+          ) {
 
-                  <div class="item-meta">
-                    ${escapeHtml(subjectData.stream || "General")}
-                  </div>
-                </div>
+            const arrow =
+              document.createElement("span");
 
-                <button
-                  class="delete-btn"
-                  data-delete-subject-board="${board.id}"
-                  data-delete-subject-class="${classDoc.id}"
-                  data-delete-subject="${subjectDoc.id}"
-                >
-                  Delete
-                </button>
-              </div>
-            `;
+            arrow.className =
+              "arrow";
+
+            arrow.textContent =
+              "›";
+
+            box.appendChild(arrow);
+
+          }
 
 
-            const chaptersSnap =
-              await getDocs(
-                collection(
-                  db,
-                  "boards",
-                  board.id,
-                  "classes",
-                  classDoc.id,
-                  "subjects",
-                  subjectDoc.id,
-                  "chapters"
-                )
-              );
+          main.addEventListener(
+            "click",
+            () => {
 
+              if (currentLevel === "boards") {
 
-            for(
-              const chapterDoc
-              of chaptersSnap.docs
-            ){
+                showClasses(item);
 
-              const chapterData =
-                chapterDoc.data();
+              }
 
+              else if (currentLevel === "classes") {
 
-              html += `
-                <div
-                  class="item"
-                  style="margin-left:36px"
-                >
-                  <div>
-                    <div class="item-name">
-                      📖 ${escapeHtml(chapterData.name)}
-                    </div>
-                  </div>
+                showSubjects(item);
 
-                  <button
-                    class="delete-btn"
-                    data-delete-chapter-board="${board.id}"
-                    data-delete-chapter-class="${classDoc.id}"
-                    data-delete-chapter-subject="${subjectDoc.id}"
-                    data-delete-chapter="${chapterDoc.id}"
-                  >
-                    Delete
-                  </button>
-                </div>
-              `;
+              }
 
+              else if (currentLevel === "subjects") {
 
-              const topicsSnap =
-                await getDocs(
-                  collection(
-                    db,
-                    "boards",
-                    board.id,
-                    "classes",
-                    classDoc.id,
-                    "subjects",
-                    subjectDoc.id,
-                    "chapters",
-                    chapterDoc.id,
-                    "topics"
-                  )
-                );
+                showChapters(item);
 
+              }
 
-              for(
-                const topicDoc
-                of topicsSnap.docs
-              ){
+              else if (currentLevel === "chapters") {
 
-                const topicData =
-                  topicDoc.data();
-
-
-                html += `
-                  <div
-                    class="item"
-                    style="margin-left:48px"
-                  >
-                    <div>
-                      <div class="item-name">
-                        📝 ${escapeHtml(topicData.name)}
-                      </div>
-                    </div>
-
-                    <button
-                      class="delete-btn"
-                      data-delete-topic-board="${board.id}"
-                      data-delete-topic-class="${classDoc.id}"
-                      data-delete-topic-subject="${subjectDoc.id}"
-                      data-delete-topic-chapter="${chapterDoc.id}"
-                      data-delete-topic="${topicDoc.id}"
-                    >
-                      Delete
-                    </button>
-                  </div>
-                `;
+                showTopics(item);
 
               }
 
             }
-
-          }
-
-        }
-
-      }
-
-
-      list.innerHTML =
-        html ||
-        '<div class="empty">अभी कोई curriculum नहीं है।</div>';
-
-
-      // DELETE BUTTONS
-
-      list
-        .querySelectorAll(
-          "[data-delete-board]"
-        )
-        .forEach(
-          btn => {
-
-            btn.addEventListener(
-              "click",
-              () =>
-                deleteBoard(
-                  btn.dataset.deleteBoard
-                )
-            );
-
-          }
-        );
-
-
-      list
-        .querySelectorAll(
-          "[data-delete-class]"
-        )
-        .forEach(
-          btn => {
-
-            btn.addEventListener(
-              "click",
-              () =>
-                deleteClass(
-                  btn.dataset.deleteClassBoard,
-                  btn.dataset.deleteClass
-                )
-            );
-
-          }
-        );
-
-
-      list
-        .querySelectorAll(
-          "[data-delete-subject]"
-        )
-        .forEach(
-          btn => {
-
-            btn.addEventListener(
-              "click",
-              () =>
-                deleteSubject(
-                  btn.dataset.deleteSubjectBoard,
-                  btn.dataset.deleteSubjectClass,
-                  btn.dataset.deleteSubject
-                )
-            );
-
-          }
-        );
-
-
-      list
-        .querySelectorAll(
-          "[data-delete-chapter]"
-        )
-        .forEach(
-          btn => {
-
-            btn.addEventListener(
-              "click",
-              () =>
-                deleteChapter(
-                  btn.dataset.deleteChapterBoard,
-                  btn.dataset.deleteChapterClass,
-                  btn.dataset.deleteChapterSubject,
-                  btn.dataset.deleteChapter
-                )
-            );
-
-          }
-        );
-
-
-      list
-        .querySelectorAll(
-          "[data-delete-topic]"
-        )
-        .forEach(
-          btn => {
-
-            btn.addEventListener(
-              "click",
-              () =>
-                deleteTopic(
-                  btn.dataset.deleteTopicBoard,
-                  btn.dataset.deleteTopicClass,
-                  btn.dataset.deleteTopicSubject,
-                  btn.dataset.deleteTopicChapter,
-                  btn.dataset.deleteTopic
-                )
-            );
-
-          }
-        );
-
-    }
-
-
-    // =========================
-    // DELETE BOARD
-    // =========================
-
-    async function deleteBoard(
-      boardId
-    ){
-
-      if(
-        !confirm(
-          "क्या यह Board delete करना है?"
-        )
-      ){
-
-        return;
-      }
-
-
-      await deleteDoc(
-        doc(
-          db,
-          "boards",
-          boardId
-        )
-      );
-
-
-      alert(
-        "Board deleted."
-      );
-
-
-      await loadBoards();
-
-      await updateStats();
-
-    }
-
-
-    // =========================
-    // DELETE CLASS
-    // =========================
-
-    async function deleteClass(
-      boardId,
-      classId
-    ){
-
-      if(
-        !confirm(
-          "क्या यह Class delete करना है?"
-        )
-      ){
-
-        return;
-      }
-
-
-      await deleteDoc(
-        doc(
-          db,
-          "boards",
-          boardId,
-          "classes",
-          classId
-        )
-      );
-
-
-      alert(
-        "Class deleted."
-      );
-
-
-      await loadCurriculumList();
-
-      await updateStats();
-
-    }
-
-
-    // =========================
-    // DELETE SUBJECT
-    // =========================
-
-    async function deleteSubject(
-      boardId,
-      classId,
-      subjectId
-    ){
-
-      if(
-        !confirm(
-          "क्या यह Subject delete करना है?"
-        )
-      ){
-
-        return;
-      }
-
-
-      await deleteDoc(
-        doc(
-          db,
-          "boards",
-          boardId,
-          "classes",
-          classId,
-          "subjects",
-          subjectId
-        )
-      );
-
-
-      alert(
-        "Subject deleted."
-      );
-
-
-      await loadCurriculumList();
-
-      await updateStats();
-
-    }
-
-
-    // =========================
-    // DELETE CHAPTER
-    // =========================
-
-    async function deleteChapter(
-      boardId,
-      classId,
-      subjectId,
-      chapterId
-    ){
-
-      if(
-        !confirm(
-          "क्या यह Chapter delete करना है?"
-        )
-      ){
-
-        return;
-      }
-
-
-      await deleteDoc(
-        doc(
-          db,
-          "boards",
-          boardId,
-          "classes",
-          classId,
-          "subjects",
-          subjectId,
-          "chapters",
-          chapterId
-        )
-      );
-
-
-      alert(
-        "Chapter deleted."
-      );
-
-
-      await loadCurriculumList();
-
-      await updateStats();
-
-    }
-
-
-    // =========================
-    // DELETE TOPIC
-    // =========================
-
-    async function deleteTopic(
-      boardId,
-      classId,
-      subjectId,
-      chapterId,
-      topicId
-    ){
-
-      if(
-        !confirm(
-          "क्या यह Topic delete करना है?"
-        )
-      ){
-
-        return;
-      }
-
-
-      await deleteDoc(
-        doc(
-          db,
-          "boards",
-          boardId,
-          "classes",
-          classId,
-          "subjects",
-          subjectId,
-          "chapters",
-          chapterId,
-          "topics",
-          topicId
-        )
-      );
-
-
-      alert(
-        "Topic deleted."
-      );
-
-
-      await loadCurriculumList();
-
-    }
-
-
-    // =========================
-    // STATS
-    // =========================
-
-    async function updateStats(){
-
-      try{
-
-        const boardSnap =
-          await getDocs(
-            collection(
-              db,
-              "boards"
-            )
           );
 
 
-        let classTotal = 0;
-        let subjectTotal = 0;
-        let chapterTotal = 0;
+          items.appendChild(box);
+
+        }
+      );
+
+    }
 
 
-        for(
-          const board of boardSnap.docs
-        ){
+    /* =========================
+       SINGULAR NAME
+    ========================= */
 
-          const classSnap =
-            await getDocs(
-              collection(
-                db,
-                "boards",
-                board.id,
-                "classes"
-              )
-            );
+    function getSingularName() {
 
+      if (currentLevel === "boards")
+        return "Board";
 
-          classTotal +=
-            classSnap.size;
+      if (currentLevel === "classes")
+        return "Class";
 
+      if (currentLevel === "subjects")
+        return "Subject";
 
-          for(
-            const classDoc
-            of classSnap.docs
-          ){
+      if (currentLevel === "chapters")
+        return "Chapter";
 
-            const subjectSnap =
-              await getDocs(
-                collection(
-                  db,
-                  "boards",
-                  board.id,
-                  "classes",
-                  classDoc.id,
-                  "subjects"
-                )
-              );
+      return "Topic";
+
+    }
 
 
-            subjectTotal +=
-              subjectSnap.size;
+    /* =========================
+       ADD BUTTON
+    ========================= */
+
+    addBtn.addEventListener(
+      "click",
+      () => {
+
+        openAddModal();
+
+      }
+    );
 
 
-            for(
-              const subjectDoc
-              of subjectSnap.docs
-            ){
+    /* =========================
+       OPEN ADD MODAL
+    ========================= */
 
-              const chapterSnap =
-                await getDocs(
-                  collection(
-                    db,
-                    "boards",
-                    board.id,
-                    "classes",
-                    classDoc.id,
-                    "subjects",
-                    subjectDoc.id,
-                    "chapters"
-                  )
-                );
+    function openAddModal() {
+
+      editingId = null;
+
+      modalTitle.textContent =
+        `Add ${getSingularName()}`;
+
+      itemName.value = "";
+      itemCode.value = "";
+
+      if (currentLevel === "subjects") {
+
+        streamSelect.classList.remove("hidden");
+
+      } else {
+
+        streamSelect.classList.add("hidden");
+
+      }
+
+      modal.classList.remove("hidden");
+
+      setTimeout(
+        () => itemName.focus(),
+        100
+      );
+
+    }
 
 
-              chapterTotal +=
-                chapterSnap.size;
+    /* =========================
+       OPEN EDIT MODAL
+    ========================= */
+
+    function openEditModal(item) {
+
+      editingId = item.id;
+
+      modalTitle.textContent =
+        `Edit ${getSingularName()}`;
+
+      itemName.value =
+        item.name || "";
+
+      itemCode.value =
+        item.code || "";
+
+      if (currentLevel === "subjects") {
+
+        streamSelect.classList.remove("hidden");
+
+        streamSelect.value =
+          item.stream || "";
+
+      } else {
+
+        streamSelect.classList.add("hidden");
+
+      }
+
+      modal.classList.remove("hidden");
+
+      setTimeout(
+        () => itemName.focus(),
+        100
+      );
+
+    }
+
+
+    /* =========================
+       SAVE
+    ========================= */
+
+    saveBtn.addEventListener(
+      "click",
+      async () => {
+
+        const name =
+          itemName.value.trim();
+
+        if (!name) {
+
+          alert(
+            `${getSingularName()} का नाम डालें।`
+          );
+
+          return;
+
+        }
+
+        showLoading();
+
+        try {
+
+          const data = {
+            name: name,
+            updatedAt: serverTimestamp()
+          };
+
+
+          /* BOARD */
+
+          if (
+            currentLevel === "boards"
+          ) {
+
+            data.code =
+              itemCode.value.trim();
+
+          }
+
+
+          /* CLASS */
+
+          if (
+            currentLevel === "classes"
+          ) {
+
+            const match =
+              name.match(/\d+/);
+
+            if (match) {
+
+              data.classNumber =
+                Number(match[0]);
+
+              data.order =
+                Number(match[0]);
+
+            } else {
+
+              data.order =
+                Date.now();
 
             }
 
           }
 
-        }
 
+          /* SUBJECT */
 
-        document
-          .getElementById(
-            "boardCount"
-          )
-          .textContent =
-            boardSnap.size;
+          if (
+            currentLevel === "subjects"
+          ) {
 
+            data.stream =
+              streamSelect.value || "General";
 
-        document
-          .getElementById(
-            "classCount"
-          )
-          .textContent =
-            classTotal;
+            data.order =
+              Date.now();
 
-
-        document
-          .getElementById(
-            "subjectCount"
-          )
-          .textContent =
-            subjectTotal;
-
-
-        document
-          .getElementById(
-            "chapterCount"
-          )
-          .textContent =
-            chapterTotal;
-
-
-      }catch(error){
-
-        console.error(
-          "Stats error:",
-          error
-        );
-
-      }
-
-    }
-
-
-    // =========================
-    // ANNOUNCEMENT
-    // =========================
-
-    document
-      .getElementById(
-        "announcementBtn"
-      )
-      .addEventListener(
-        "click",
-        async () => {
-
-          const title =
-            document
-              .getElementById(
-                "announcementTitle"
-              )
-              .value
-              .trim();
-
-
-          const text =
-            document
-              .getElementById(
-                "announcementText"
-              )
-              .value
-              .trim();
-
-
-          if(
-            !title ||
-            !text
-          ){
-
-            alert(
-              "Title और message दोनों डालें।"
-            );
-
-            return;
           }
 
 
-          try{
+          /* CHAPTER */
+
+          if (
+            currentLevel === "chapters"
+          ) {
+
+            const match =
+              name.match(/\d+/);
+
+            if (match) {
+
+              data.chapterNumber =
+                Number(match[0]);
+
+              data.order =
+                Number(match[0]);
+
+            } else {
+
+              data.order =
+                Date.now();
+
+            }
+
+          }
+
+
+          /* TOPIC */
+
+          if (
+            currentLevel === "topics"
+          ) {
+
+            data.order =
+              Date.now();
+
+          }
+
+
+          if (editingId) {
+
+            const ref =
+              doc(
+                getCurrentCollection(),
+                editingId
+              );
+
+            await updateDoc(
+              ref,
+              data
+            );
+
+          } else {
+
+            data.createdAt =
+              serverTimestamp();
 
             await addDoc(
-              collection(
-                db,
-                "announcements"
-              ),
-              {
-
-                title:title,
-
-                text:text,
-
-                createdAt:
-                  serverTimestamp()
-
-              }
-            );
-
-
-            document
-              .getElementById(
-                "announcementTitle"
-              )
-              .value = "";
-
-
-            document
-              .getElementById(
-                "announcementText"
-              )
-              .value = "";
-
-
-            alert(
-              "Announcement published."
-            );
-
-
-          }catch(error){
-
-            console.error(error);
-
-            alert(
-              "Announcement save नहीं हुआ।"
+              getCurrentCollection(),
+              data
             );
 
           }
 
+
+          closeModal();
+
+          await refreshCurrentLevel();
+
+        } catch (error) {
+
+          console.error(error);
+
+          alert(
+            "Save नहीं हुआ: " +
+            error.message
+          );
+
+        } finally {
+
+          hideLoading();
+
         }
-      );
+
+      }
+    );
 
 
-    // =========================
-    // ESCAPE HTML
-    // =========================
+    /* =========================
+       DELETE
+    ========================= */
 
-    function escapeHtml(
-      value
-    ){
+    async function deleteItem(item) {
 
-      return String(value || "")
-        .replace(
-          /&/g,
-          "&amp;"
-        )
-        .replace(
-          /</g,
-          "&lt;"
-        )
-        .replace(
-          />/g,
-          "&gt;"
-        )
-        .replace(
-          /"/g,
-          "&quot;"
-        )
-        .replace(
-          /'/g,
-          "&#039;"
+      const confirmDelete =
+        confirm(
+          `"${item.name}" को delete करना चाहते हैं?`
         );
 
+      if (!confirmDelete) return;
+
+      showLoading();
+
+      try {
+
+        await deleteDoc(
+          doc(
+            getCurrentCollection(),
+            item.id
+          )
+        );
+
+        await refreshCurrentLevel();
+
+      } catch (error) {
+
+        console.error(error);
+
+        alert(
+          "Delete नहीं हुआ: " +
+          error.message
+        );
+
+      } finally {
+
+        hideLoading();
+
+      }
+
     }
+
+
+    /* =========================
+       REFRESH
+    ========================= */
+
+    async function refreshCurrentLevel() {
+
+      if (currentLevel === "boards") {
+
+        await showBoards();
+
+      }
+
+      else if (currentLevel === "classes") {
+
+        await showClasses(
+          currentBoard
+        );
+
+      }
+
+      else if (currentLevel === "subjects") {
+
+        await showSubjects(
+          currentClass
+        );
+
+      }
+
+      else if (currentLevel === "chapters") {
+
+        await showChapters(
+          currentSubject
+        );
+
+      }
+
+      else if (currentLevel === "topics") {
+
+        await showTopics(
+          currentChapter
+        );
+
+      }
+
+    }
+
+
+    /* =========================
+       BACK
+    ========================= */
+
+    backBtn.addEventListener(
+      "click",
+      async () => {
+
+        if (currentLevel === "classes") {
+
+          await showBoards();
+
+        }
+
+        else if (currentLevel === "subjects") {
+
+          await showClasses(
+            currentBoard
+          );
+
+        }
+
+        else if (currentLevel === "chapters") {
+
+          await showSubjects(
+            currentClass
+          );
+
+        }
+
+        else if (currentLevel === "topics") {
+
+          await showChapters(
+            currentSubject
+          );
+
+        }
+
+      }
+    );
+
+
+    /* =========================
+       MODAL CLOSE
+    ========================= */
+
+    cancelBtn.addEventListener(
+      "click",
+      closeModal
+    );
+
+
+    modal.addEventListener(
+      "click",
+      (e) => {
+
+        if (e.target === modal) {
+
+          closeModal();
+
+        }
+
+      }
+    );
+
+
+    function closeModal() {
+
+      modal.classList.add("hidden");
+
+      itemName.value = "";
+      itemCode.value = "";
+      editingId = null;
+
+    }
+
+
+    /* =========================
+       ENTER KEY
+    ========================= */
+
+    itemName.addEventListener(
+      "keydown",
+      (e) => {
+
+        if (e.key === "Enter") {
+
+          saveBtn.click();
+
+        }
+
+      }
+    );
 
   </script>
 
