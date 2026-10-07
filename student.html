@@ -1,1 +1,981 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EXAMOS AI - Student</title>
 
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #090b18;
+      color: white;
+      min-height: 100vh;
+    }
+
+    .app {
+      max-width: 520px;
+      margin: auto;
+      min-height: 100vh;
+      padding: 18px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 25px;
+    }
+
+    .back {
+      border: none;
+      background: #171b35;
+      color: white;
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .title {
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .subtitle {
+      color: #9ca3af;
+      margin-top: 5px;
+      font-size: 13px;
+    }
+
+    .screen {
+      display: none;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    .welcome {
+      padding: 25px 0;
+    }
+
+    .welcome h1 {
+      font-size: 30px;
+      margin-bottom: 10px;
+    }
+
+    .welcome p {
+      color: #aab0c0;
+      line-height: 1.5;
+    }
+
+    .login-box {
+      background: #171b35;
+      padding: 20px;
+      border-radius: 18px;
+      margin-top: 25px;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      margin-bottom: 12px;
+      border: 1px solid #303653;
+      border-radius: 12px;
+      background: #0f1225;
+      color: white;
+      outline: none;
+    }
+
+    button.primary {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      background: #8b5cf6;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button.primary:disabled {
+      opacity: .6;
+    }
+
+    .item {
+      background: #171b35;
+      border: 1px solid #252a48;
+      padding: 18px;
+      border-radius: 16px;
+      margin-bottom: 12px;
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    .item:hover {
+      border-color: #8b5cf6;
+      transform: translateY(-1px);
+    }
+
+    .item-title {
+      font-size: 17px;
+      font-weight: bold;
+    }
+
+    .item-info {
+      color: #9299ad;
+      font-size: 13px;
+      margin-top: 5px;
+    }
+
+    .empty {
+      background: #171b35;
+      border-radius: 16px;
+      padding: 25px;
+      text-align: center;
+      color: #9299ad;
+    }
+
+    .logout {
+      margin-top: 20px;
+      background: transparent;
+      border: 1px solid #343a58;
+      color: #c7cada;
+      padding: 10px 16px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .loading {
+      text-align: center;
+      color: #9ca3af;
+      padding: 30px;
+    }
+
+    .error {
+      background: #3a1720;
+      border: 1px solid #6b2637;
+      color: #ffb4c0;
+      padding: 14px;
+      border-radius: 12px;
+      margin-bottom: 15px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <!-- LOGIN -->
+  <section id="loginScreen" class="screen active">
+
+    <div class="welcome">
+      <h1>Welcome to EXAMOS AI</h1>
+      <p>
+        Smart Practice. Better Results.<br>
+        Learn with AI.
+      </p>
+    </div>
+
+    <div id="loginError"></div>
+
+    <div class="login-box">
+
+      <input
+        type="email"
+        id="email"
+        placeholder="Email"
+        autocomplete="email"
+      >
+
+      <input
+        type="password"
+        id="password"
+        placeholder="Password"
+        autocomplete="current-password"
+      >
+
+      <button class="primary" id="loginBtn">
+        Login
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- BOARD -->
+  <section id="boardScreen" class="screen">
+
+    <div class="topbar">
+      <div>
+        <div class="title">Choose Board</div>
+        <div class="subtitle">अपना बोर्ड चुनें</div>
+      </div>
+    </div>
+
+    <div id="boardList">
+      <div class="loading">Boards loading...</div>
+    </div>
+
+    <button class="logout" id="logoutBtn">
+      Logout
+    </button>
+
+  </section>
+
+
+  <!-- CLASS -->
+  <section id="classScreen" class="screen">
+
+    <div class="topbar">
+      <button class="back" onclick="goBack('board')">‹</button>
+
+      <div>
+        <div class="title" id="classTitle">Choose Class</div>
+        <div class="subtitle">अपनी कक्षा चुनें</div>
+      </div>
+    </div>
+
+    <div id="classList"></div>
+
+  </section>
+
+
+  <!-- SUBJECT -->
+  <section id="subjectScreen" class="screen">
+
+    <div class="topbar">
+      <button class="back" onclick="goBack('class')">‹</button>
+
+      <div>
+        <div class="title">Choose Subject</div>
+        <div class="subtitle" id="subjectSubtitle"></div>
+      </div>
+    </div>
+
+    <div id="subjectList"></div>
+
+  </section>
+
+
+  <!-- CHAPTER -->
+  <section id="chapterScreen" class="screen">
+
+    <div class="topbar">
+      <button class="back" onclick="goBack('subject')">‹</button>
+
+      <div>
+        <div class="title">Choose Chapter</div>
+        <div class="subtitle" id="chapterSubtitle"></div>
+      </div>
+    </div>
+
+    <div id="chapterList"></div>
+
+  </section>
+
+
+  <!-- TOPIC -->
+  <section id="topicScreen" class="screen">
+
+    <div class="topbar">
+      <button class="back" onclick="goBack('chapter')">‹</button>
+
+      <div>
+        <div class="title">Choose Topic</div>
+        <div class="subtitle" id="topicSubtitle"></div>
+      </div>
+    </div>
+
+    <div id="topicList"></div>
+
+  </section>
+
+</div>
+
+
+<script type="module">
+
+  import { auth, db } from "./firebase-config.js";
+
+  import {
+    signInWithEmailAndPassword,
+    onAuthStateChanged,
+    signOut
+  } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+
+  import {
+    collection,
+    getDocs,
+    query,
+    orderBy
+  } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+
+
+  /* =========================
+     STATE
+  ========================= */
+
+  let selectedBoard = null;
+  let selectedClass = null;
+  let selectedSubject = null;
+  let selectedChapter = null;
+
+
+  /* =========================
+     ELEMENTS
+  ========================= */
+
+  const loginScreen = document.getElementById("loginScreen");
+  const boardScreen = document.getElementById("boardScreen");
+  const classScreen = document.getElementById("classScreen");
+  const subjectScreen = document.getElementById("subjectScreen");
+  const chapterScreen = document.getElementById("chapterScreen");
+  const topicScreen = document.getElementById("topicScreen");
+
+  const loginBtn = document.getElementById("loginBtn");
+  const logoutBtn = document.getElementById("logoutBtn");
+
+  const loginError = document.getElementById("loginError");
+
+
+  /* =========================
+     SCREEN CONTROL
+  ========================= */
+
+  function showScreen(screen) {
+
+    document.querySelectorAll(".screen").forEach(s => {
+      s.classList.remove("active");
+    });
+
+    screen.classList.add("active");
+  }
+
+
+  /* =========================
+     LOGIN
+  ========================= */
+
+  loginBtn.addEventListener("click", async () => {
+
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+
+    loginError.innerHTML = "";
+
+    if (!email || !password) {
+
+      loginError.innerHTML =
+        `<div class="error">Email और password डालें।</div>`;
+
+      return;
+    }
+
+    loginBtn.disabled = true;
+    loginBtn.textContent = "Login हो रहा है...";
+
+    try {
+
+      await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+    } catch (error) {
+
+      console.error(error);
+
+      loginError.innerHTML =
+        `<div class="error">
+          Login नहीं हो पाया। Email या password जाँचें।
+        </div>`;
+
+      loginBtn.disabled = false;
+      loginBtn.textContent = "Login";
+    }
+
+  });
+
+
+  /* =========================
+     AUTH STATE
+  ========================= */
+
+  onAuthStateChanged(auth, async user => {
+
+    if (user) {
+
+      showScreen(boardScreen);
+
+      await loadBoards();
+
+    } else {
+
+      showScreen(loginScreen);
+
+    }
+
+  });
+
+
+  /* =========================
+     BOARDS
+  ========================= */
+
+  async function loadBoards() {
+
+    const container =
+      document.getElementById("boardList");
+
+    container.innerHTML =
+      `<div class="loading">Boards loading...</div>`;
+
+    try {
+
+      const boardsRef =
+        collection(db, "boards");
+
+      const q =
+        query(boardsRef, orderBy("order"));
+
+      const snapshot =
+        await getDocs(q);
+
+      if (snapshot.empty) {
+
+        container.innerHTML =
+          `<div class="empty">
+            अभी कोई Board उपलब्ध नहीं है।<br>
+            Admin Panel से Board add करें।
+          </div>`;
+
+        return;
+      }
+
+      container.innerHTML = "";
+
+      snapshot.forEach(docSnap => {
+
+        const board = docSnap.data();
+
+        const div =
+          document.createElement("div");
+
+        div.className = "item";
+
+        div.innerHTML = `
+          <div class="item-title">
+            ${escapeHtml(board.name || "Unnamed Board")}
+          </div>
+
+          <div class="item-info">
+            ${escapeHtml(board.code || "Board")}
+          </div>
+        `;
+
+        div.onclick = () => {
+
+          selectedBoard = {
+            id: docSnap.id,
+            ...board
+          };
+
+          loadClasses();
+
+        };
+
+        container.appendChild(div);
+
+      });
+
+    } catch (error) {
+
+      console.error(error);
+
+      container.innerHTML =
+        `<div class="error">
+          Board load नहीं हो पाए।
+          Firestore rules और Firebase configuration जाँचें।
+        </div>`;
+    }
+
+  }
+
+
+  /* =========================
+     CLASSES
+  ========================= */
+
+  async function loadClasses() {
+
+    showScreen(classScreen);
+
+    document.getElementById("classTitle").textContent =
+      selectedBoard.name || "Choose Class";
+
+    const container =
+      document.getElementById("classList");
+
+    container.innerHTML =
+      `<div class="loading">Classes loading...</div>`;
+
+    try {
+
+      const ref =
+        collection(
+          db,
+          "boards",
+          selectedBoard.id,
+          "classes"
+        );
+
+      const q =
+        query(ref, orderBy("order"));
+
+      const snapshot =
+        await getDocs(q);
+
+      if (snapshot.empty) {
+
+        container.innerHTML =
+          `<div class="empty">
+            इस Board में अभी कोई Class नहीं है।
+          </div>`;
+
+        return;
+      }
+
+      container.innerHTML = "";
+
+      const docs = [...snapshot.docs];
+
+      docs.sort((a, b) => {
+
+        const A = Number(a.data().classNumber || 0);
+        const B = Number(b.data().classNumber || 0);
+
+        return A - B;
+
+      });
+
+      docs.forEach(docSnap => {
+
+        const cls = docSnap.data();
+
+        const div =
+          document.createElement("div");
+
+        div.className = "item";
+
+        div.innerHTML = `
+          <div class="item-title">
+            ${escapeHtml(cls.name || "Class")}
+          </div>
+
+          <div class="item-info">
+            ${cls.classNumber
+              ? "Class " + escapeHtml(String(cls.classNumber))
+              : "Class"}
+          </div>
+        `;
+
+        div.onclick = () => {
+
+          selectedClass = {
+            id: docSnap.id,
+            ...cls
+          };
+
+          loadSubjects();
+
+        };
+
+        container.appendChild(div);
+
+      });
+
+    } catch (error) {
+
+      console.error(error);
+
+      container.innerHTML =
+        `<div class="error">
+          Classes load नहीं हो पाए।
+        </div>`;
+    }
+
+  }
+
+
+  /* =========================
+     SUBJECTS
+  ========================= */
+
+  async function loadSubjects() {
+
+    showScreen(subjectScreen);
+
+    document.getElementById("subjectSubtitle").textContent =
+      selectedClass.name || "";
+
+    const container =
+      document.getElementById("subjectList");
+
+    container.innerHTML =
+      `<div class="loading">Subjects loading...</div>`;
+
+    try {
+
+      const ref =
+        collection(
+          db,
+          "boards",
+          selectedBoard.id,
+          "classes",
+          selectedClass.id,
+          "subjects"
+        );
+
+      const q =
+        query(ref, orderBy("order"));
+
+      const snapshot =
+        await getDocs(q);
+
+      if (snapshot.empty) {
+
+        container.innerHTML =
+          `<div class="empty">
+            इस Class में अभी कोई Subject नहीं है।
+          </div>`;
+
+        return;
+      }
+
+      container.innerHTML = "";
+
+      snapshot.forEach(docSnap => {
+
+        const subject = docSnap.data();
+
+        const div =
+          document.createElement("div");
+
+        div.className = "item";
+
+        div.innerHTML = `
+          <div class="item-title">
+            ${escapeHtml(subject.name || "Subject")}
+          </div>
+
+          <div class="item-info">
+            ${subject.stream
+              ? escapeHtml(subject.stream)
+              : "Subject"}
+          </div>
+        `;
+
+        div.onclick = () => {
+
+          selectedSubject = {
+            id: docSnap.id,
+            ...subject
+          };
+
+          loadChapters();
+
+        };
+
+        container.appendChild(div);
+
+      });
+
+    } catch (error) {
+
+      console.error(error);
+
+      container.innerHTML =
+        `<div class="error">
+          Subjects load नहीं हो पाए।
+        </div>`;
+    }
+
+  }
+
+
+  /* =========================
+     CHAPTERS
+  ========================= */
+
+  async function loadChapters() {
+
+    showScreen(chapterScreen);
+
+    document.getElementById("chapterSubtitle").textContent =
+      selectedSubject.name || "";
+
+    const container =
+      document.getElementById("chapterList");
+
+    container.innerHTML =
+      `<div class="loading">Chapters loading...</div>`;
+
+    try {
+
+      const ref =
+        collection(
+          db,
+          "boards",
+          selectedBoard.id,
+          "classes",
+          selectedClass.id,
+          "subjects",
+          selectedSubject.id,
+          "chapters"
+        );
+
+      const q =
+        query(ref, orderBy("order"));
+
+      const snapshot =
+        await getDocs(q);
+
+      if (snapshot.empty) {
+
+        container.innerHTML =
+          `<div class="empty">
+            इस Subject में अभी कोई Chapter नहीं है।
+          </div>`;
+
+        return;
+      }
+
+      container.innerHTML = "";
+
+      snapshot.forEach(docSnap => {
+
+        const chapter = docSnap.data();
+
+        const div =
+          document.createElement("div");
+
+        div.className = "item";
+
+        div.innerHTML = `
+          <div class="item-title">
+            ${chapter.chapterNumber
+              ? "Chapter " + escapeHtml(String(chapter.chapterNumber)) + ": "
+              : ""}
+            ${escapeHtml(chapter.name || "Chapter")}
+          </div>
+
+          <div class="item-info">
+            Chapter
+          </div>
+        `;
+
+        div.onclick = () => {
+
+          selectedChapter = {
+            id: docSnap.id,
+            ...chapter
+          };
+
+          loadTopics();
+
+        };
+
+        container.appendChild(div);
+
+      });
+
+    } catch (error) {
+
+      console.error(error);
+
+      container.innerHTML =
+        `<div class="error">
+          Chapters load नहीं हो पाए।
+        </div>`;
+    }
+
+  }
+
+
+  /* =========================
+     TOPICS
+  ========================= */
+
+  async function loadTopics() {
+
+    showScreen(topicScreen);
+
+    document.getElementById("topicSubtitle").textContent =
+      selectedChapter.name || "";
+
+    const container =
+      document.getElementById("topicList");
+
+    container.innerHTML =
+      `<div class="loading">Topics loading...</div>`;
+
+    try {
+
+      const ref =
+        collection(
+          db,
+          "boards",
+          selectedBoard.id,
+          "classes",
+          selectedClass.id,
+          "subjects",
+          selectedSubject.id,
+          "chapters",
+          selectedChapter.id,
+          "topics"
+        );
+
+      const q =
+        query(ref, orderBy("order"));
+
+      const snapshot =
+        await getDocs(q);
+
+      if (snapshot.empty) {
+
+        container.innerHTML =
+          `<div class="empty">
+            इस Chapter में अभी कोई Topic नहीं है।
+          </div>`;
+
+        return;
+      }
+
+      container.innerHTML = "";
+
+      snapshot.forEach(docSnap => {
+
+        const topic = docSnap.data();
+
+        const div =
+          document.createElement("div");
+
+        div.className = "item";
+
+        div.innerHTML = `
+          <div class="item-title">
+            ${escapeHtml(topic.name || "Topic")}
+          </div>
+
+          <div class="item-info">
+            Practice और Test जल्द उपलब्ध होंगे
+          </div>
+        `;
+
+        div.onclick = () => {
+
+          alert(
+            "Topic selected: " +
+            (topic.name || "Topic")
+          );
+
+        };
+
+        container.appendChild(div);
+
+      });
+
+    } catch (error) {
+
+      console.error(error);
+
+      container.innerHTML =
+        `<div class="error">
+          Topics load नहीं हो पाए।
+        </div>`;
+    }
+
+  }
+
+
+  /* =========================
+     BACK
+  ========================= */
+
+  window.goBack = function(level) {
+
+    if (level === "board") {
+
+      showScreen(boardScreen);
+      loadBoards();
+
+    }
+
+    else if (level === "class") {
+
+      showScreen(classScreen);
+      loadClasses();
+
+    }
+
+    else if (level === "subject") {
+
+      showScreen(subjectScreen);
+      loadSubjects();
+
+    }
+
+    else if (level === "chapter") {
+
+      showScreen(chapterScreen);
+      loadChapters();
+
+    }
+
+  };
+
+
+  /* =========================
+     LOGOUT
+  ========================= */
+
+  logoutBtn.addEventListener("click", async () => {
+
+    await signOut(auth);
+
+  });
+
+
+  /* =========================
+     SECURITY
+  ========================= */
+
+  function escapeHtml(value) {
+
+    return String(value)
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+
+  }
+
+</script>
+
+</body>
+</html>
